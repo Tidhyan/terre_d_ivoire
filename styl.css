@@ -1,0 +1,863 @@
+:root {
+    --gold: #D4AF37;
+    --dark: #1a1a1a;
+    --light-gray: #f8f8f8;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+
+
+/* Navigation */
+.nav-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    font-size: 1.2rem; /* Légèrement réduit pour mobile */
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--dark);
+}
+
+@media (min-width: 768px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+}
+
+.menu-links a {
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: var(--dark);
+    transition: color 0.3s;
+}
+
+.menu-links a:hover {
+    color: var(--gold);
+}
+
+/* Boutons */
+.btn-outline-gold {
+    padding: 10px 24px;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-outline-gold:hover {
+    background: var(--gold);
+    color: white;
+}
+
+/* Styles spécifiques au menu mobile */
+#mobile-menu a {
+    color: var(--dark);
+    letter-spacing: 1px;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+#mobile-menu a:hover {
+    color: var(--gold);
+}
+
+.active-link { color: var(--gold) !important; font-weight: 800; position: relative; }
+.active-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: var(--gold); }
+
+
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ccc;
+}
+
+.hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+.hero-subtitle {
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 40px;
+}
+
+.hero-title span {
+    font-style: italic;
+    font-weight: 400;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Carrousel Logic */
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+/* Boutons de navigation */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev { left: 30px; }
+.next { right: 30px; }
+
+/* Indicateurs (Dots) */
+.slider-dots {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dot.active {
+    background: var(--gold);
+    width: 28px;
+    border-radius: 10px;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .slider-btn { display: none; } /* On épure sur mobile */
+    .hero-title { font-size: 2.2rem; }
+    .slider-dots { bottom: 20px; }
+}
+
+
+
+
+.btn-gold {
+    background: var(--gold);
+    color: white;
+    padding: 18px 35px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: transform 0.3s;
+}
+
+.btn-white-outline {
+    border: 1px solid white;
+    padding: 18px 35px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.btn-white-outline:hover {
+    background: white;
+    color: var(--dark);
+}
+
+/* WhatsApp */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25D366;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 100;
+    transition: 0.3s;
+}
+
+.whatsapp-float svg {
+    width: 30px;
+    fill: white;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-btns a { width: 100%; }
+}
+
+
+
+/* Stats Section */
+.stats-section {
+    padding: 80px 0;
+    background: white;
+    position: relative;
+    margin-top: -50px; /* Chevauchement léger pour le style */
+    z-index: 10;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+.stat-number {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.stat-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+
+.stat-text {
+    font-size: 0.85rem;
+    color: #71717a;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+/* Responsive Stats */
+@media (max-width: 768px) {
+    .stats-section {
+        margin-top: 0;
+        width: 100%;
+        box-shadow: none;
+    }
+    .stat-card {
+        padding-bottom: 40px;
+        border-bottom: 1px solid #f4f4f5;
+    }
+    .stat-card:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+
+
+/* Cartes de Propriétés */
+.property-card {
+    cursor: pointer;
+}
+
+.property-card h3 {
+    color: var(--dark);
+    transition: color 0.3s;
+}
+
+.property-card:hover h3 {
+    color: var(--gold);
+}
+
+/* Animation de l'image au survol [cite: 57] */
+.property-card img {
+    will-change: transform;
+}
+
+/* Style des badges */
+.badge-gold {
+    background: var(--gold);
+    color: white;
+}
+
+
+
+
+
+.btn-gold-small {
+    background: var(--gold);
+    color: white;
+    padding: 12px 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.btn-gold-small:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+
+
+
+
+/* Matterport Integration */
+.matterport-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* Ratio 16:9 pour un affichage parfait */
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.matterport-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+/* Sur mobile, on augmente un peu la hauteur pour mieux voir */
+@media (max-width: 768px) {
+    .matterport-container {
+        padding-top: 100%; /* Format carré sur mobile pour plus de visibilité */
+    }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Style spécifique pour les images de prévisualisation */
+.group:hover img {
+    filter: brightness(0.8);
+}
+
+
+
+/* Page Catalogue */
+/* Page Catalogue */
+/* Page Catalogue */
+
+
+.font-luxury { font-family: 'Playfair Display', serif; }
+.font-luxury span { font-style: italic; font-weight: 400; }
+
+/* Navigation */
+.nav-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.logo { font-weight: 700; letter-spacing: 3px; font-size: 1.1rem; }
+.logo a { color: var(--dark); text-decoration: none; }
+
+.menu-links a {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #555;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.active-link { color: var(--gold) !important; border-bottom: 2px solid var(--gold); padding-bottom: 5px; }
+
+/* Grille & Cartes */
+.property-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.group:hover .property-img { transform: scale(1.1); }
+
+.status-badge {
+    position: absolute; top: 20px; left: 20px;
+    color: white; padding: 6px 14px;
+    font-size: 8px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    z-index: 10;
+}
+
+/* Bouton Détails */
+.btn-property {
+    display: block; width: 100%;
+    text-align: center; border: 1px solid var(--dark);
+    padding: 15px; font-size: 9px;
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: 2.5px; transition: 0.4s;
+    text-decoration: none; color: var(--dark);
+}
+
+.btn-property:hover {
+    background: var(--dark);
+    color: white;
+}
+
+/* Filtres Interactifs */
+.filter-btn {
+    color: #999; cursor: pointer;
+    transition: 0.3s; position: relative;
+    background: none; border: none;
+}
+
+.filter-btn.active {
+    color: var(--dark);
+    border-bottom: 2px solid var(--gold);
+}
+
+/* Biens Vendus */
+.sold .grayscale { filter: grayscale(1); opacity: 0.5; }
+.sold .line-through { text-decoration-color: var(--gold); }
+
+/* Bouton Nav */
+.btn-outline-gold {
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-outline-gold:hover { background: var(--gold); color: white; }
+
+
+
+
+
+
+/* page Details villa */
+/* page Details villa */
+/* page Details villa */
+/* Styles Spécifiques Page Détails */
+.btn-dark {
+    background: var(--dark);
+    color: white;
+    border: 1px solid var(--dark);
+    transition: 0.3s;
+}
+
+.btn-dark:hover {
+    background: transparent;
+    color: var(--dark);
+}
+
+.btn-outline-dark {
+    background: transparent;
+    color: var(--dark);
+    border: 1px solid var(--dark);
+    transition: 0.3s;
+}
+
+.btn-outline-dark:hover {
+    background: var(--dark);
+    color: white;
+}
+
+/* Galerie asymétrique */
+.grid-cols-4 img {
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+/* page construction */
+/* page construction */
+/* page construction */
+
+.font-luxury { font-family: 'Playfair Display', serif; }
+.font-luxury span { font-style: italic; font-weight: 400; color: var(--gold); }
+
+.nav-glass { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); }
+.active-link { color: var(--gold) !important; font-weight: 800; position: relative; }
+.active-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: var(--gold); }
+
+/* Visionneuse */
+.main-viewer {
+    height: 450px;
+    background: #f4f4f5;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+}
+
+.v-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.v-img.active { opacity: 1; z-index: 10; }
+
+/* Contrôles Horizontaux */
+.v-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.v-controls button {
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-radius: 40px;
+    transition: 0.3s;
+    color: #666;
+}
+
+.v-controls button.active, .v-controls button:hover {
+    background: var(--dark);
+    color: white;
+}
+
+.v-controls button.gold {
+    color: var(--gold);
+    border: 1px solid var(--gold);
+}
+
+.v-controls button.gold.active, .v-controls button.gold:hover {
+    background: var(--gold);
+    color: white;
+}
+
+/* Boutons */
+.btn-outline-gold {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 12px 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-outline-gold:hover {
+    background: var(--gold);
+    color: white;
+}
+
+.btn-gold-action {
+    background: var(--gold);
+    color: white;
+    padding: 15px 30px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Animations */
+.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+    .main-viewer { height: 300px; }
+    .v-controls { width: 90%; justify-content: center; }
+}
+
+
+
+
+
+/* page expertise */
+/* page expertise */
+/* page expertise */
+
+.nav-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+}
+
+.active-link {
+    color: var(--gold) !important;
+    border-bottom: 2px solid var(--gold);
+}
+
+/* FILTRES PORTFOLIO */
+.filter-btn {
+    padding: 12px 28px;
+    border-radius: 100px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.filter-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-3px);
+}
+
+.filter-btn.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* PROJECT CARDS */
+.project-card {
+    transition: all 0.5s ease;
+    animation: fadeInUp 0.8s ease backwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* DROPDOWN MENU */
+.dropdown { position: relative; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    min-width: 220px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    padding: 15px 0;
+    z-index: 100;
+}
+.dropdown:hover .dropdown-content { display: block; }
+.dropdown-content a {
+    padding: 12px 20px;
+    display: block;
+    font-size: 0.85rem;
+    color: var(--dark) !important;
+    transition: background 0.3s;
+}
+.dropdown-content a:hover {
+    background: #f8f9fa;
+    color: var(--gold) !important;
+}
+
+/* BOUTONS */
+.btn-outline-gold {
+    padding: 10px 24px;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-outline-gold:hover {
+    background: var(--gold);
+    color: white !important;
+}
+
+
+
+
+
+/* --- BOUTON WHATSAPP FLOTTANT --- */
+/* --- BOUTON WHATSAPP FLOTTANT --- */
+/* --- BOUTON WHATSAPP FLOTTANT --- */
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366; /* Vert WhatsApp officiel */
+    color: white;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+/* On cache le texte par défaut sur petit téléphone pour ne pas encombrer */
+.float-text {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.6s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-left: 0;
+}
+
+/* Au survol ou sur tablette+, on montre le texte */
+.whatsapp-float:hover .float-text {
+    max-width: 200px;
+    margin-left: 10px;
+}
+
+/* Animation de pulsation douce */
+.whatsapp-float {
+    animation: pulseWhatsApp 2s infinite;
+}
+
+@keyframes pulseWhatsApp {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) translateY(-5px);
+    background-color: #20ba5a;
+}
+
+/* Adaptation Mobile : On ne garde que l'icône si l'écran est vraiment petit */
+@media (max-width: 480px) {
+    .whatsapp-float {
+        padding: 15px;
+        bottom: 20px;
+        right: 20px;
+    }
+    .float-text {
+        display: none;
+    }
+}
