@@ -5,176 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construction | Terre d'Ivoire</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styl.css">
+    <style>
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; padding: 40px 20px; }
+        .modal.active { display: block; }
+        .v-img { display: none; }
+        .v-img.active { display: block; }
+    </style>
 </head>
-<body>
+<body class="bg-white">
 
     <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="logo">TERRE D'IVOIRE</div>
-            
-            <div class="hidden md:flex space-x-10 menu-links">
-                <a href="index.html" >🏠 ACCUEIL</a>
-                <a href="catalogue.html">📁 VENTE</a>
-                <a href="construction.html" class="active-link">🏗️ CONSTRUCTION</a>
-                <a href="expertise.html">🏆 EXPERTISE</a>
+            <div class="logo">TERRE D'IVOIRE ✨</div>
+            <div class="hidden md:flex items-center space-x-10 menu-links">
+                <a href="index.html">ACCUEIL</a>
+                <div class="relative group py-4">
+                    <div class="flex items-center cursor-pointer"><a href="catalogue.html">VENTE</a><span class="ml-2 text-[10px]">▼</span></div>
+                    <div class="sub-menu-container absolute left-0 top-[100%] w-64 bg-white shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 border border-zinc-100">
+                        <div class="py-2">
+                            <a href="promotion.html" class="sub-menu-item">🏗️ PROMOTION IMMOBILIÈRE</a>
+                            <a href="particulier.html" class="sub-menu-item">🏠 PROPRIÉTÉ PARTICULIÈRE</a>
+                            <a href="terrains.html" class="sub-menu-item">🌱 TERRAIN ET PARCELLE</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="construction.html" class="text-gold font-bold active-link">CONSTRUCTION</a>
+                <a href="expertise.html">EXPERTISE</a>
             </div>
-
-            <div class="flex items-center space-x-4">
-                <a href="tel:+22500000000" class="hidden md:block btn-outline-gold">
-                   📞 Appel direct
-                </a>
-
-                <button id="menu-btn" class="md:hidden flex flex-col justify-between w-6 h-5">
-                    <span class="w-full h-0.5 bg-black rounded-full"></span>
-                    <span class="w-full h-0.5 bg-black rounded-full"></span>
-                    <span class="w-full h-0.5 bg-black rounded-full"></span>
-                </button>
-            </div>
-        </div>
-
-        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 flex flex-col items-center py-8 space-y-6 shadow-xl">
-            <a href="index.html" class="font-semibold">🏠 ACCUEIL</a>
-            <a href="catalogue.html" class="font-semibold">📁 VENTE</a>
-            <a href="construction.html" class="font-semibold">🏗️ CONSTRUCTION</a>
-            <a href="expertise.html" class="font-semibold">🏆 EXPERTISE</a>
-            <a href="tel:+22500000000" class="btn-outline-gold">📞 Appel direct</a>
+            <a href="tel:+2250708970664" class="btn-outline-gold hidden md:block">APPEL DIRECT</a>
         </div>
     </nav>
 
-
-    <header class="pt-40 pb-20 bg-zinc-50">
+    <header class="pt-48 pb-20 bg-zinc-50 border-b border-zinc-100">
         <div class="max-w-7xl mx-auto px-6">
-            <h1 class="font-luxury text-4xl md:text-6xl mb-4">Architecture & <span>Construction</span></h1>
-            <p class="text-zinc-500 uppercase tracking-[0.2em] text-[10px] font-bold">Visualisez votre futur chez-vous sous tous les angles</p>
+            <h1 class="font-luxury text-5xl md:text-7xl mb-4 italic text-zinc-900">Architecture <span>Visionnaire</span></h1>
+            <p class="text-zinc-500 uppercase tracking-[0.3em] text-[10px] font-bold">Projets exclusifs à bâtir sur votre terrain</p>
         </div>
     </header>
 
-    <script>
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-    </script>
-
-
-     <section class="py-12 bg-zinc-900 text-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="bg-zinc-800 p-8 md:p-12 rounded-sm border border-white/5 flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2">
-                    <h2 class="font-luxury text-3xl mb-4">Vous avez déjà <span>votre plan ?</span></h2>
-                    <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                        Téléversez vos fichiers ou décrivez-nous votre vision. Nos ingénieurs analyseront votre projet pour une étude de faisabilité gratuite.
-                    </p>
-                    <button onclick="togglePlanForm()" class="btn-gold-action !bg-white !text-zinc-900 hover:!bg-gold hover:!text-white">Proposer mon propre plan</button>
-                </div>
-                <div class="md:w-1/2 w-full hidden" id="custom-plan-form">
-                    <form action="#" class="space-y-4 animate-fade-in">
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest mb-2 font-bold">Description du projet</label>
-                            <textarea class="w-full bg-zinc-900 border border-white/10 p-4 text-sm focus:border-gold outline-none h-24" placeholder="Ex: Villa duplex 5 pièces avec piscine à Bingerville..."></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-[10px] uppercase tracking-widest mb-2 font-bold">Joindre votre plan (PDF/Image)</label>
-                            <input type="file" class="w-full text-xs text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 cursor-pointer">
-                        </div>
-                        <button type="submit" class="w-full bg-gold text-white py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-zinc-900 transition">Envoyer mon projet</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <main class="max-w-7xl mx-auto px-6 py-24 space-y-40">
 
-        <div class="model-row flex flex-col lg:flex-row gap-12 items-start">
-            <div class="lg:w-2/3 w-full">
-                <div class="main-viewer relative group">
-                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200" class="v-img active" id="m1-fini">
-                    <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?q=80&w=1200" class="v-img" id="m1-2d">
-                    <img src="https://images.unsplash.com/photo-1600607687940-4e524cb35a3a?q=80&w=1200" class="v-img" id="m1-3d">
-                    <div class="v-controls">
-                        <button onclick="sw(1,'fini')" class="active">Photo</button>
-                        <button onclick="sw(1,'2d')">Plan 2D</button>
-                        <button onclick="sw(1,'3d')">Vue 3D</button>
-                        <button onclick="mt(1)" class="gold">Matterport</button>
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start border-b border-zinc-100 pb-24">
+            <div class="lg:col-span-7 space-y-6">
+                <div class="aspect-video bg-zinc-100 rounded-sm overflow-hidden shadow-2xl relative group">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-full object-cover grayscale-[50%]">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <span class="text-white text-[10px] font-bold uppercase tracking-[0.4em] border border-white/30 px-6 py-3">Concept Architecture 3D</span>
                     </div>
                 </div>
-                <div id="mt-1" class="hidden mt-4 h-[400px] bg-black">
-                    <iframe src="https://my.matterport.com/show/?m=SX97JvS9Yv9" class="w-full h-full border-0"></iframe>
-                </div>
-            </div>
-            <div class="lg:w-1/3">
-                <span class="text-gold font-bold text-[10px] tracking-widest uppercase">Modèle Prestige</span>
-                <h2 class="font-luxury text-4xl mt-2 mb-6">Villa <span>Lina</span></h2>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-8">Un design épuré privilégiant la lumière naturelle. 4 pièces autonomes avec terrasse couverte.</p>
-                <a href="https://wa.me/22500000000" class="btn-outline-gold inline-block">Commander ce plan</a>
-            </div>
-        </div>
 
-        <div class="model-row flex flex-col lg:flex-row-reverse gap-12 items-start">
-            <div class="lg:w-2/3 w-full">
-                <div class="main-viewer relative">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" class="v-img active" id="m2-fini">
-                    <img src="https://images.unsplash.com/photo-1599427303058-f173243f0583?q=80&w=1200" class="v-img" id="m2-2d">
-                    <img src="https://images.unsplash.com/photo-1600566753351-3d592e505978?q=80&w=1200" class="v-img" id="m2-3d">
-                    <div class="v-controls">
-                        <button onclick="sw(2,'fini')" class="active">Photo</button>
-                        <button onclick="sw(2,'2d')">Plan 2D</button>
-                        <button onclick="sw(2,'3d')">Vue 3D</button>
-                        <button onclick="mt(2)" class="gold">Matterport</button>
-                    </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="openModal('modal-2d-1')" class="bg-zinc-900 text-white py-4 text-[9px] font-bold uppercase tracking-widest hover:bg-gold transition">Plans 2D (10 Vues)</button>
+                    <button onclick="openModal('modal-3d-1')" class="bg-zinc-900 text-white py-4 text-[9px] font-bold uppercase tracking-widest hover:bg-gold transition">Rendus 3D (2 Vues)</button>
+                    <button onclick="openModal('modal-video-1')" class="bg-zinc-900 text-white py-4 text-[9px] font-bold uppercase tracking-widest hover:bg-gold transition">Vidéo Drone 3D</button>
+                    <button onclick="mt(1)" class="border border-zinc-200 py-4 text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition">Matterport</button>
                 </div>
-                <div id="mt-2" class="hidden mt-4 h-[400px] bg-black">
-                    <iframe src="https://my.matterport.com/show/?m=SX97JvS9Yv9" class="w-full h-full border-0"></iframe>
+
+                <div id="mt-1" class="hidden aspect-video bg-black w-full rounded-sm overflow-hidden shadow-2xl">
+                    <iframe src="https://my.matterport.com/show?play=1&lang=en-US&m=vNtptZXMm8U" class="w-full h-full" allowfullscreen></iframe>
                 </div>
             </div>
-            <div class="lg:w-1/3">
-                <span class="text-gold font-bold text-[10px] tracking-widest uppercase">Haut Standing</span>
-                <h2 class="font-luxury text-4xl mt-2 mb-6">Duplex <span>Skyline</span></h2>
-                <p class="text-zinc-500 text-sm leading-relaxed mb-8">Architecture cubique avec balcon panoramique et suite parentale de 45m².</p>
-                <a href="https://wa.me/22500000000" class="btn-outline-gold inline-block">Commander ce plan</a>
+
+            <div class="lg:col-span-5 space-y-8">
+                <div>
+                    <span class="text-gold font-bold text-[10px] tracking-widest uppercase italic">Modèle Prestige</span>
+                    <h2 class="font-luxury text-5xl mt-2 italic">Villa <span>Lina</span></h2>
+                </div>
+
+                <div class="prose text-zinc-600 text-sm leading-relaxed space-y-4">
+                    <p>La Villa Lina redéfinit l'élégance tropicale. Conçue comme une oasis de lumière, ce modèle de 4 pièces autonomes offre une distribution fluide entre les espaces de vie et l'extérieur.</p>
+                    <ul class="space-y-2 border-l-2 border-gold/20 pl-6 italic">
+                        <li>• Salon cathédrale avec 6m de hauteur sous plafond.</li>
+                        <li>• Cuisine avec îlot central et cellier caché.</li>
+                        <li>• Suite Master avec dressing et accès piscine.</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 bg-zinc-50 border border-zinc-100 rounded-sm">
+                    <p class="text-[10px] font-bold text-zinc-400 uppercase mb-4">Budget estimatif de construction</p>
+                    <p class="text-3xl font-luxury text-zinc-900">45.000.000 <span class="text-xs not-italic uppercase font-bold text-zinc-400 italic">FCFA (Hors terrain)</span></p>
+                </div>
+
+                <a href="https://wa.me/2250708970664" class="block text-center bg-zinc-900 text-white py-5 font-bold text-[10px] tracking-[0.3em] uppercase hover:bg-gold transition shadow-xl">Commander ce projet</a>
             </div>
-        </div>
+        </section>
 
         </main>
 
+    <div id="modal-2d-1" class="modal">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-white font-luxury text-2xl italic">Détails Techniques <span>2D (Cotes & Coupes)</span></h3>
+                <button onclick="closeModal('modal-2d-1')" class="text-white text-4xl">&times;</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="w-full h-64 object-cover border border-white/10">
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-3d-1" class="modal">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-white font-luxury text-2xl italic">Rendus <span>Perspectives 3D</span></h3>
+                <button onclick="closeModal('modal-3d-1')" class="text-white text-4xl">&times;</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <img src="https://images.unsplash.com/photo-1600607687940-4e524cb35a3a?q=80&w=1200" class="w-full h-96 object-cover rounded-sm">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6199f7ea0f?q=80&w=1200" class="w-full h-96 object-cover rounded-sm">
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-video-1" class="modal">
+        <div class="max-w-4xl mx-auto flex flex-col h-full justify-center">
+            <div class="flex justify-end mb-4"><button onclick="closeModal('modal-video-1')" class="text-white text-4xl">&times;</button></div>
+            <div class="aspect-video bg-black shadow-2xl">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-zinc-900 text-white py-12 text-center">
-        <p class="text-[10px] tracking-[0.3em] uppercase opacity-50">© 2026 Terre Ivoire - Excellence Immobilière</p>
+        <p class="text-[10px] tracking-[0.3em] uppercase opacity-50 font-bold italic">© 2026 Terre Ivoire - L'Art de Construire</p>
     </footer>
 
     <script>
-        function togglePlanForm() {
-            document.getElementById('custom-plan-form').classList.toggle('hidden');
-        }
-
-        function sw(id, type) {
-            const container = document.getElementById(`m${id}-${type}`).parentElement;
-            container.querySelectorAll('.v-img').forEach(img => img.classList.remove('active'));
-            document.getElementById(`m${id}-${type}`).classList.add('active');
-            
-            event.target.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
+        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = 'auto'; }
+        
         function mt(id) {
             const frame = document.getElementById(`mt-${id}`);
             frame.classList.toggle('hidden');
             if(!frame.classList.contains('hidden')) frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
-
-    <a href="https://wa.me/22500000000" class="whatsapp-float" target="_blank" title="Discutez avec nous sur WhatsApp">
-    <span class="whatsapp-icon">
-        <svg viewBox="0 0 448 512" width="25" height="25" fill="white">
-            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.4 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.5-9.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.4-29.8-17-41.1-4.5-10.9-9.1-9.4-12.4-9.6-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
-        </svg>
-    </span>
-    <span class="float-text">Discutez avec nous 💬</span>
-</a>
 
 </body>
 </html>
