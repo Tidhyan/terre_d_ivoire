@@ -10,32 +10,71 @@
 </head>
 <body>
 
-    <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="logo">TERRE D'IVOIRE ✨</div>
-            <div class="hidden md:flex items-center space-x-10 menu-links">
-                <a href="index.html">ACCUEIL</a>
-                <div class="relative group py-4">
-                    <div class="flex items-center cursor-pointer">
-                        <a href="catalogue.html" class="hover:text-gold transition-colors text-gold">VENTE</a>
-                        <span class="ml-2 text-[10px] text-zinc-400 group-hover:text-gold transition-transform duration-300 group-hover:rotate-180">▼</span>
-                    </div>
-                    <div class="sub-menu-container absolute left-0 top-[100%] w-64 bg-white shadow-2xl rounded-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-zinc-100">
-                        <div class="py-2">
-                            <a href="promotion.html" class="sub-menu-item active-link">🏗️ PROMOTION IMMOBILIÈRE</a>
-                            <a href="particulier.html" class="sub-menu-item">🏠 PROPRIÉTÉ PARTICULIÈRE</a>
-                            <a href="terrains.html" class="sub-menu-item">🌱 TERRAIN ET PARCELLE</a>
-                        </div>
+   <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="logo">TERRE D'IVOIRE ✨</div>
+        
+        <div class="hidden md:flex items-center space-x-10 menu-links">
+            <a href="index.html">ACCUEIL</a>
+            
+            <div class="relative group py-4">
+                <div class="flex items-center cursor-pointer">
+                    <a href="catalogue.html" class="hover:text-gold transition-colors">VENTE</a>
+                    <span class="ml-2 text-[10px] text-zinc-400 group-hover:text-gold transition-transform duration-300 group-hover:rotate-180">
+                        ▼
+                    </span>
+                </div>
+                
+                <div class="sub-menu-container absolute left-0 top-[100%] w-64 bg-white shadow-2xl rounded-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-zinc-100">
+                    <div class="py-2">
+                        <a href="promotion.html" class="sub-menu-item active-link">
+                            <span class="mr-2">🏗️</span> PROMOTION IMMOBILIÈRE
+                        </a>
+                        <a href="particulier.html" class="sub-menu-item">
+                            <span class="mr-2">🏠</span> PROPRIÉTÉ PARTICULIÈRE
+                        </a>
+                        <a href="terrains.html" class="sub-menu-item">
+                            <span class="mr-2">🌱</span> TERRAIN ET PARCELLE
+                        </a>
                     </div>
                 </div>
-                <a href="construction.html">CONSTRUCTION</a>
-                <a href="expertise.html">EXPERTISE</a>
             </div>
-            <div class="flex items-center space-x-4">
-                <a href="tel:+2250708970664" class="hidden md:block btn-outline-gold">APPEL DIRECT</a>
-            </div>
+
+            <a href="construction.html">CONSTRUCTION</a>
+            <a href="expertise.html">EXPERTISE</a>
         </div>
-    </nav>
+
+        <div class="flex items-center space-x-4">
+            <a href="tel:+2250708970664" class="hidden md:block btn-outline-gold">
+                APPEL DIRECT
+            </a>
+
+            <button id="menu-btn" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none">
+                <span class="w-full h-0.5 bg-black rounded-full"></span>
+                <span class="w-full h-0.5 bg-black rounded-full"></span>
+                <span class="w-full h-0.5 bg-black rounded-full"></span>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 flex flex-col items-center py-8 space-y-6 shadow-xl">
+        <a href="index.html" class="font-semibold">ACCUEIL</a>
+        <a href="catalogue.html" class="font-semibold text-gold">VENTE (TOUT VOIR)</a>
+        <div class="flex flex-col items-center space-y-4 bg-zinc-50 w-full py-4 border-y border-zinc-100">
+            <a href="promotion.html" class="text-sm">🏗️ Promotion immobilière</a>
+            <a href="particulier.html" class="text-sm">🏠 Propriété particulière</a>
+            <a href="terrains.html" class="text-sm">🌱 Terrain et parcelle</a>
+        </div>
+        <a href="construction.html" class="font-semibold">CONSTRUCTION</a>
+        <a href="expertise.html" class="font-semibold">EXPERTISE</a>
+        <a href="tel:+2250708970664" class="btn-outline-gold">Appel direct</a>
+    </div>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    
 
     <header class="pt-40 pb-20 bg-zinc-50 border-b border-zinc-100">
         <div class="max-w-7xl mx-auto px-6 text-center">
