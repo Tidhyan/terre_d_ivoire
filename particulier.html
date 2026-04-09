@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Construction | Terre d'Ivoire</title>
+    <title>Propriété particulière | Terre d'Ivoire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styl.css">
-    <style>
-        .plan-card:hover .plan-overlay { opacity: 1; }
-        .v-img { display: none; }
-        .v-img.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .tab-btn.active { border-color: #D4AF37; color: #D4AF37; }
-    </style>
 </head>
-<body class="bg-white">
+<body>
 
-    <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
+   <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
     <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
         <div class="logo">TERRE D'IVOIRE ✨</div>
         
         <div class="hidden md:flex items-center space-x-10 menu-links">
-            <a href="index.html" >ACCUEIL</a>
+            <a href="index.html">ACCUEIL</a>
             
             <div class="relative group py-4">
                 <div class="flex items-center cursor-pointer">
@@ -37,7 +30,7 @@
                         <a href="promotion.html" class="sub-menu-item">
                             <span class="mr-2">🏗️</span> PROMOTION IMMOBILIÈRE
                         </a>
-                        <a href="particulier.html" class="sub-menu-item active-link">
+                        <a href="particulier.html" class="sub-menu-item  active-link">
                             <span class="mr-2">🏠</span> PROPRIÉTÉ PARTICULIÈRE
                         </a>
                         <a href="terrains.html" class="sub-menu-item">
@@ -81,125 +74,93 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    
 
-
-
-
-
-
-
-
-    <header class="pt-48 pb-20 bg-zinc-50 border-b border-zinc-100">
-        <div class="max-w-7xl mx-auto px-6">
-            <span class="text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-4 block">Solutions Clés en Main</span>
-            <h1 class="font-luxury text-5xl md:text-7xl mb-6 italic">Construisez votre <span>Rêve</span></h1>
-            <p class="text-zinc-500 max-w-2xl leading-relaxed text-sm">
-                Bénéficiez de l'excellence technique de Leader Construction pour transformer votre vision en réalité, avec une garantie totale de qualité et de délais[cite: 138, 139].
-            </p>
+    <header class="pt-40 pb-20 bg-zinc-50 border-b border-zinc-100">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-zinc-500 uppercase tracking-[0.2em] text-[10px] font-bold mb-4">Solutions Clés en Main</p>
+            <h1 class="font-luxury text-4xl md:text-6xl mb-4">Construisez <span>votre Rêve</span></h1>
+            <p class="text-zinc-400 max-w-2xl mx-auto text-sm">Bénéficiez de l'excellence technique de Leader Construction pour transformer votre vision en réalité, avec une garantie totale de qualité et de délais</p>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-24">
-        
-        <div class="mb-16">
-            <h2 class="font-luxury text-4xl mb-2">Catalogue de <span>Plans</span></h2>
-            <p class="text-zinc-400 text-xs uppercase tracking-widest">Plans Villa & Duplex Personnalisables [cite: 142, 143]</p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-20">
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start border-b border-zinc-100 pb-20">
-                <div class="space-y-6">
-                    <div class="relative aspect-video bg-white shadow-2xl rounded-sm overflow-hidden border border-zinc-100">
-                        <img id="m1-3d" src="https://images.unsplash.com/photo-1600585154340-be6199f7ea0f?q=80&w=1200" class="v-img active w-full h-full object-cover" alt="Vue 3D">
-                        <img id="m1-2d" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200" class="v-img w-full h-full object-cover" alt="Plan 2D">
-                    </div>
-                    <div class="flex gap-4">
-                        <button onclick="sw('1', '3d')" class="tab-btn active px-6 py-2 border-b-2 border-transparent text-[10px] font-bold uppercase tracking-widest transition">Vue Perspective 3D [cite: 149]</button>
-                        <button onclick="sw('1', '2d')" class="tab-btn px-6 py-2 border-b-2 border-transparent text-[10px] font-bold uppercase tracking-widest transition">Plan Technique 2D [cite: 147]</button>
-                    </div>
+            <div class="group bg-white border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-bold tracking-widest uppercase">Cocody Riviera</div>
                 </div>
-
-                <div class="space-y-8">
-                    <div>
-                        <h3 class="font-luxury text-3xl mb-4 italic">Villa <span>Lumière</span></h3>
-                        <p class="text-zinc-600 text-sm leading-relaxed">
-                            Conception moderne optimisée pour les terrains urbains. Caractéristiques techniques : structure béton armé, finitions haut de gamme, isolation thermique renforcée[cite: 151, 152, 153].
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-6 bg-zinc-50 p-6 rounded-sm">
-                        <div>
-                            <p class="text-[10px] font-bold text-zinc-400 uppercase">Prix Estimatif [cite: 155]</p>
-                            <p class="text-xl font-bold text-dark">Dès 45.000.000 FCFA</p>
+                <div class="p-8">
+                    <h3 class="font-luxury text-2xl mb-4 italic">Villa <span>Elysium</span></h3>
+                    <div class="flex items-center justify-between border-y border-zinc-50 py-4 mb-6">
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Pièces</p>
+                            <p class="font-bold text-sm">6 Pièces</p>
                         </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-zinc-400 uppercase">Délai Construction [cite: 158]</p>
-                            <p class="text-xl font-bold text-dark">6 à 8 Mois</p>
+                        <div class="w-px h-8 bg-zinc-100"></div>
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Surface</p>
+                            <p class="font-bold text-sm">450 m²</p>
+                        </div>
+                        <div class="w-px h-8 bg-zinc-100"></div>
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Statut</p>
+                            <p class="text-green-600 font-bold text-sm italic">Disponible</p>
                         </div>
                     </div>
-
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="flex-1 bg-zinc-900 text-white py-4 font-bold text-[10px] tracking-widest uppercase hover:bg-gold transition">
-                            Commander ce plan [cite: 161]
-                        </button>
-                        <button onclick="mt('1')" class="flex-1 border border-zinc-200 py-4 font-bold text-[10px] tracking-widest uppercase hover:bg-zinc-50 transition">
-                            Visite Virtuelle 360°
-                        </button>
-                    </div>
+                    <a href="details_particulier.html" class="block w-full text-center border border-dark py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition">
+                        Voir les détails →
+                    </a>
                 </div>
             </div>
 
-            <div id="mt-1" class="hidden w-full aspect-video bg-zinc-100 rounded-sm overflow-hidden shadow-inner">
-                <iframe src="https://my.matterport.com/show/?m=SX97JvS9Yv9" class="w-full h-full" allowfullscreen></iframe>
+            <div class="group bg-white border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6199f7ea0f?q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-bold tracking-widest uppercase">Bingerville</div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-luxury text-2xl mb-4 italic">Duplex <span>Horizon</span></h3>
+                    <div class="flex items-center justify-between border-y border-zinc-50 py-4 mb-6">
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Pièces</p>
+                            <p class="font-bold text-sm">5 Pièces</p>
+                        </div>
+                        <div class="w-px h-8 bg-zinc-100"></div>
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Surface</p>
+                            <p class="font-bold text-sm">300 m²</p>
+                        </div>
+                        <div class="w-px h-8 bg-zinc-100"></div>
+                        <div class="text-center">
+                            <p class="text-[9px] text-zinc-400 uppercase font-bold tracking-tighter">Statut</p>
+                            <p class="text-gold font-bold text-sm italic">Finitions</p>
+                        </div>
+                    </div>
+                    <a href="details_particulier.html" class="block w-full text-center border border-dark py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition">
+                        Voir les détails →
+                    </a>
+                </div>
             </div>
 
-        </div>
+            </div>
+    </section>
 
-        <div class="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 text-center bg-zinc-900 text-white p-12 rounded-sm">
-            <div>
-                <p class="text-3xl font-luxury text-gold">15+</p>
-                <p class="text-[9px] uppercase tracking-widest opacity-60">Années d'Expertise [cite: 167, 170]</p>
-            </div>
-            <div>
-                <p class="text-3xl font-luxury text-gold">100%</p>
-                <p class="text-[9px] uppercase tracking-widest opacity-60">Satisfaction Clients [cite: 168, 171]</p>
-            </div>
-            <div>
-                <p class="text-3xl font-luxury text-gold">100+</p>
-                <p class="text-[9px] uppercase tracking-widest opacity-60">Projets Livrés [cite: 169, 172]</p>
-            </div>
-            <div>
-                <p class="text-3xl font-luxury text-gold">ACD</p>
-                <p class="text-[9px] uppercase tracking-widest opacity-60">Accompagnement Légal</p>
-            </div>
-        </div>
-    </main>
-
-    <footer class="bg-zinc-900 text-white py-12 text-center border-t border-white/5">
-        <p class="text-[10px] tracking-[0.3em] uppercase opacity-40">© 2026 Terre Ivoire - Excellence Immobilière</p>
+    <footer class="bg-zinc-900 text-white py-12 text-center">
+        <p class="text-[10px] tracking-[0.3em] uppercase opacity-50">© 2026 Terre Ivoire - Excellence Immobilière</p>
     </footer>
 
+    <a href="https://wa.me/2250708970664" class="whatsapp-float" target="_blank">
+        <span class="whatsapp-icon">
+            <svg viewBox="0 0 448 512" width="25" height="25" fill="white">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.4 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.3-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.5-9.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.4-29.8-17-41.1-4.5-10.9-9.1-9.4-12.4-9.6-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.5 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+            </svg>
+        </span>
+    </a>
 
     <script>
-        // Switcher 2D/3D
-        function sw(id, type) {
-            const container = document.getElementById(`m${id}-${type}`).parentElement;
-            container.querySelectorAll('.v-img').forEach(img => img.classList.remove('active'));
-            document.getElementById(`m${id}-${type}`).classList.add('active');
-            
-            event.target.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // Toggle Visite Virtuelle
-        function mt(id) {
-            const frame = document.getElementById(`mt-${id}`);
-            frame.classList.toggle('hidden');
-            if(!frame.classList.contains('hidden')) frame.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        // Mobile Menu
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
         if(btn) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
@@ -212,6 +173,7 @@
         </svg>
     </span>
     <span class="float-text">Discutez avec nous 💬</span>
-</a>
+
+
 </body>
 </html>

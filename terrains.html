@@ -15,7 +15,7 @@
         <div class="logo">TERRE D'IVOIRE ✨</div>
         
         <div class="hidden md:flex items-center space-x-10 menu-links">
-            <a href="index.html" class="active-link">ACCUEIL</a>
+            <a href="index.html">ACCUEIL</a>
             
             <div class="relative group py-4">
                 <div class="flex items-center cursor-pointer">
@@ -33,7 +33,7 @@
                         <a href="particulier.html" class="sub-menu-item">
                             <span class="mr-2">🏠</span> PROPRIÉTÉ PARTICULIÈRE
                         </a>
-                        <a href="terrains.html" class="sub-menu-item">
+                        <a href="terrains.html" class="sub-menu-item active-link">
                             <span class="mr-2">🌱</span> TERRAIN ET PARCELLE
                         </a>
                     </div>
@@ -81,6 +81,12 @@
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
+
+        // Fonction pour lire/mettre en pause au clic
+        function togglePlay(video) {
+            if (video.paused) video.play();
+            else video.pause();
+        }
     </script>
 
     <header class="pt-48 pb-20 bg-zinc-900 text-white relative overflow-hidden">
@@ -88,7 +94,7 @@
             <span class="text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-4 block">Sécurité Juridique Garantie</span>
             <h1 class="font-luxury text-5xl md:text-7xl italic">Terrains & <span>Parcelles</span></h1>
             <p class="text-zinc-400 max-w-xl mt-6 text-sm leading-relaxed">
-                Chaque parcelle est rigoureusement sélectionnée, avec ACD et études de sol à l'appui, pour sécuriser votre investissement foncier[cite: 107, 110].
+                Chaque parcelle est rigoureusement sélectionnée, avec ACD et études de sol à l'appui, pour sécuriser votre investissement foncier.
             </p>
         </div>
         <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
@@ -100,13 +106,13 @@
 
             <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 relative group">
-                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fee74a52?q=80&w=1200" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <button class="bg-white/20 backdrop-blur-md p-6 rounded-full border border-white/30 hover:bg-gold transition group">
-                                <span class="text-white font-bold text-[10px] tracking-widest uppercase">Voir la vidéo drone</span>
-                            </button>
-                        </div>
+                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm cursor-pointer">
+                        <video 
+                            src="https://assets.mixkit.co/videos/preview/mixkit-modern-suburban-houses-aerial-view-40032-large.mp4" 
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            autoplay loop muted playsinline
+                            onclick="togglePlay(this)">
+                        </video>
                     </div>
                 </div>
                 <div class="lg:col-span-5 space-y-6">
@@ -129,7 +135,7 @@
                     </div>
                     <div class="flex items-end justify-between">
                         <div>
-                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final [cite: 108]</p>
+                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final</p>
                             <p class="text-2xl font-luxury text-gold">45.000.000 <span class="text-[10px] text-dark not-italic italic">FCFA</span></p>
                         </div>
                         <a href="https://wa.me/2250708970664" class="bg-zinc-900 text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gold transition">Réserver</a>
@@ -141,7 +147,7 @@
                 <div class="lg:col-span-5 order-2 lg:order-1 space-y-6">
                     <h2 class="font-luxury text-4xl italic">Baie <span>Cristal</span></h2>
                     <p class="text-zinc-500 text-sm leading-relaxed">
-                        Exceptionnelle parcelle en bordure de lagune avec accès privé. Certificat de viabilité et étude de sol déjà réalisés[cite: 107, 110].
+                        Exceptionnelle parcelle en bordure de lagune avec accès privé. Certificat de viabilité et étude de sol déjà réalisés.
                     </p>
                     <div class="grid grid-cols-2 gap-4 border-y border-zinc-100 py-6">
                         <div>
@@ -149,35 +155,39 @@
                             <p class="font-bold">1 200 m²</p>
                         </div>
                         <div>
-                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Accessibilité [cite: 104, 105]</p>
+                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Accessibilité</p>
                             <p class="font-bold">Voie bitumée</p>
                         </div>
                     </div>
                     <div class="flex items-end justify-between">
                         <div>
-                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final [cite: 108]</p>
+                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final</p>
                             <p class="text-2xl font-luxury text-gold">120.000.000 <span class="text-[10px] text-dark not-italic italic">FCFA</span></p>
                         </div>
                         <a href="https://wa.me/2250708970664" class="bg-zinc-900 text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gold transition">Réserver</a>
                     </div>
                 </div>
                 <div class="lg:col-span-7 order-1 lg:order-2">
-                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200" class="w-full h-full object-cover">
+                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm cursor-pointer">
+                        <video 
+                            src="https://assets.mixkit.co/videos/preview/mixkit-luxury-home-with-swimming-pool-and-green-lawn-aerial-view-40029-large.mp4" 
+                            class="w-full h-full object-cover"
+                            autoplay loop muted playsinline
+                            onclick="togglePlay(this)">
+                        </video>
                     </div>
                 </div>
             </section>
 
-
             <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 relative group">
-                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fee74a52?q=80&w=1200" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <button class="bg-white/20 backdrop-blur-md p-6 rounded-full border border-white/30 hover:bg-gold transition group">
-                                <span class="text-white font-bold text-[10px] tracking-widest uppercase">Voir la vidéo drone</span>
-                            </button>
-                        </div>
+                    <div class="aspect-video bg-zinc-100 overflow-hidden rounded-sm cursor-pointer">
+                        <video 
+                            src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-residential-neighborhood-40026-large.mp4" 
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            autoplay loop muted playsinline
+                            onclick="togglePlay(this)">
+                        </video>
                     </div>
                 </div>
                 <div class="lg:col-span-5 space-y-6">
@@ -200,15 +210,13 @@
                     </div>
                     <div class="flex items-end justify-between">
                         <div>
-                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final [cite: 108]</p>
+                            <p class="text-[9px] uppercase text-zinc-400 font-bold">Prix Final</p>
                             <p class="text-2xl font-luxury text-gold">45.000.000 <span class="text-[10px] text-dark not-italic italic">FCFA</span></p>
                         </div>
                         <a href="https://wa.me/2250708970664" class="bg-zinc-900 text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gold transition">Réserver</a>
                     </div>
                 </div>
             </section>
-
-            
 
         </div>
     </main>
