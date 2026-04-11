@@ -31,7 +31,7 @@ $biens = $stmt->fetchAll();
                 
                 <div class="relative group py-4">
                     <div class="flex items-center cursor-pointer">
-                        <a href="catalogue.php" class="hover:text-gold transition-colors">VENTE</a>
+                        <a href="catalogue.php" class="hover:text-gold transition-colors active-link">VENTE</a>
                         <span class="ml-2 text-[10px] text-zinc-400 group-hover:text-gold transition-transform duration-300 group-hover:rotate-180">
                             ▼
                         </span>
@@ -42,7 +42,7 @@ $biens = $stmt->fetchAll();
                             <a href="promotion.php" class="sub-menu-item">
                                 <span class="mr-2">🏗️</span> PROMOTION IMMOBILIÈRE
                             </a>
-                            <a href="particulier.php" class="sub-menu-item active-link">
+                            <a href="particulier.php" class="sub-menu-item">
                                 <span class="mr-2">🏠</span> PROPRIÉTÉ PARTICULIÈRE
                             </a>
                             <a href="terrains.php" class="sub-menu-item">

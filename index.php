@@ -1,3 +1,6 @@
+<?php 
+include('db.php'); 
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -222,12 +225,6 @@
                 <h2 class="font-luxury text-4xl md:text-5xl mb-6">Propriétés de <span class="italic font-light">Légende</span></h2>
                 <p class="text-zinc-500 uppercase tracking-widest text-xs">Découvrez notre sélection exclusive à la vente et en location de luxe </p>
             </div>
-            <div class="flex gap-4 text-xs font-bold tracking-tighter uppercase">
-                <button class="border-b-2 border-gold pb-1">Tout</button>
-                <button class="text-zinc-400 hover:text-zinc-800 transition pb-1">Villas</button>
-                <button class="text-zinc-400 hover:text-zinc-800 transition pb-1">Appartements</button>
-                <button class="text-zinc-400 hover:text-zinc-800 transition pb-1">Terrains </button>
-            </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -294,76 +291,76 @@
 
 
 
+
+<?php 
+global $pdo; // On force l'accès à la connexion
+$stmt_const = $pdo->query("SELECT * FROM modeles_construction ORDER BY id DESC LIMIT 2");
+$dernières_constructions = $stmt_const->fetchAll();
+?>
+
 <section id="construction" class="py-24 bg-zinc-50">
     <div class="max-w-7xl mx-auto px-6">
         
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="font-luxury text-4xl mb-4 text-zinc-800">Concevez votre futur chez-vous</h2>
-            <p class="text-zinc-500 tracking-wide">Bénéficiez de notre expertise technique pour construire selon vos envies et votre budget, avec une garantie de qualité et de délais.</p>
+            <h2 class="font-luxury text-4xl mb-4 text-zinc-800">Concevez votre futur <span>chez-vous</span></h2>
+            <p class="text-zinc-500 tracking-wide text-sm uppercase tracking-[0.1em]">Expertise technique & Architecture visionnaire</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-            <div class="bg-white p-2 rounded-sm shadow-sm border border-zinc-100 flex flex-col md:flex-row gap-8">
-                <div class="md:w-1/2 overflow-hidden bg-zinc-200">
-                    <img src="https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=1000" alt="Plan Villa" class="w-full h-full object-cover">
+            <?php foreach ($dernières_constructions as $index => $const): 
+                // On prépare les caractéristiques (on en prend 3 max pour garder le design propre)
+                $features = explode(',', $const['caracteristiques']);
+            ?>
+            <div class="bg-white p-2 rounded-sm shadow-sm border border-zinc-100 flex flex-col md:flex-row gap-8 group">
+                <div class="md:w-1/2 overflow-hidden bg-zinc-200 aspect-square md:aspect-auto">
+                    <img src="uploads/<?php echo $const['photo_principale_1']; ?>" 
+                         alt="<?php echo $const['nom_modele']; ?>" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                 </div>
-                <div class="md:w-1/2 py-6 pr-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-luxury text-2xl">Plan Villa Basse</h3>
-                        <span class="bg-gold/10 text-gold text-[10px] px-2 py-1 font-bold uppercase tracking-widest">Nouveau</span>
+
+                <div class="md:w-1/2 py-6 pr-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-luxury text-2xl"><?php echo $const['nom_modele']; ?></h3>
+                            <?php if($index === 0): ?>
+                                <span class="bg-gold/10 text-gold text-[9px] px-2 py-1 font-bold uppercase tracking-widest">Dernier Cri</span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <p class="text-zinc-400 text-[10px] uppercase font-bold tracking-widest mb-4 italic">
+                            <?php echo $const['slogan']; ?>
+                        </p>
+
+                        <ul class="space-y-3 mb-8">
+                            <?php for($i=0; $i<min(3, count($features)); $i++): ?>
+                            <li class="flex items-start text-[11px] text-zinc-600 leading-tight">
+                                <span class="text-gold mr-2">•</span>
+                                <?php echo trim($features[$i]); ?>
+                            </li>
+                            <?php endfor; ?>
+                        </ul>
                     </div>
-                    
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Plan 2D :</span> Vues d'ensemble et coupes précises 
-                        </li>
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Visuel 3D :</span> Perspective réaliste du projet 
-                        </li>
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Délais :</span> Calendrier prévisionnel fourni 
-                        </li>
-                    </ul>
 
                     <div class="border-t border-zinc-100 pt-6 flex justify-between items-center">
                         <div>
-                            <p class="text-[10px] text-zinc-400 uppercase font-bold tracking-widest">Prix Estimatif </p>
-                            <p class="text-lg font-bold text-zinc-800">Sur Devis</p>
+                            <p class="text-[10px] text-zinc-400 uppercase font-bold tracking-widest">Investissement</p>
+                            <p class="text-lg font-bold text-zinc-800 font-luxury italic">
+    <?php 
+        // On enlève les espaces ou caractères bizarres pour être sûr d'avoir un nombre
+        $prix_nettoye = preg_replace('/[^0-9]/', '', $const['prix']); 
+        echo number_format((float)$prix_nettoye, 0, ',', ' '); 
+    ?> 
+    <span class="text-[10px]">FCFA</span>
+</p>
                         </div>
-                        <a href="#" class="btn-gold-small">DETAILS </a>
+                        <a href="construction.php" class="inline-block bg-zinc-900 text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gold transition-colors shadow-lg">
+                            Détails
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <div class="bg-white p-2 rounded-sm shadow-sm border border-zinc-100 flex flex-col md:flex-row gap-8">
-                <div class="md:w-1/2 overflow-hidden bg-zinc-200">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000" alt="Plan Duplex" class="w-full h-full object-cover">
-                </div>
-                <div class="md:w-1/2 py-6 pr-6">
-                    <h3 class="font-luxury text-2xl mb-4">Plan Duplex Royal</h3>
-                    
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Options :</span> Personnalisation de l'existant 
-                        </li>
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Étude :</span> Faisabilité terrain incluse 
-                        </li>
-                        <li class="flex items-center text-xs text-zinc-600">
-                            <span class="w-24 font-bold text-zinc-400 uppercase tracking-tighter">Suivi :</span> Accompagnement de chantier 
-                        </li>
-                    </ul>
-
-                    <div class="border-t border-zinc-100 pt-6 flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] text-zinc-400 uppercase font-bold tracking-widest">Finitions </p>
-                            <p class="text-lg font-bold text-zinc-800">Haut de gamme</p>
-                        </div>
-                        <a href="#" class="btn-gold-small">DETAILS </a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
 
         </div>
     </div>
@@ -372,58 +369,80 @@
 
 
 
+<?php 
+// On récupère les 3 derniers modèles qui ont un lien Matterport
+$stmt_3d = $pdo->query("SELECT * FROM modeles_construction 
+                        WHERE lien_matterport IS NOT NULL 
+                        AND lien_matterport != '' 
+                        ORDER BY RAND() LIMIT 3");
+$visites_3d = $stmt_3d->fetchAll();
+?>
+
 <section id="visites-3d" class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="font-luxury text-4xl mb-4">Expériences Immersives</h2>
-            <p class="text-zinc-500 uppercase tracking-widest text-[10px]">Visitez nos modèles de référence en 3D</p>
+            <h2 class="font-luxury text-4xl mb-4 text-zinc-800 uppercase tracking-tight">Expériences <span>Immersives</span></h2>
+            <div class="h-[1px] w-12 bg-gold mx-auto mb-4"></div>
+            <p class="text-zinc-500 uppercase tracking-[0.3em] text-[10px] font-bold italic">Visitez nos modèles de référence en 3D</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <div class="cursor-pointer group" onclick="open3D('https://my.matterport.com/show?play=1&lang=en-US&m=vNtptZXMm8U')">
-                <div class="relative aspect-video overflow-hidden rounded-sm mb-4">
-                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <?php foreach ($visites_3d as $visite): 
+                // Traitement de l'URL Matterport pour s'assurer qu'elle est intégrable
+                $url_3d = $visite['lien_matterport'];
+                if (strpos($url_3d, 'matterport.com') !== false && strpos($url_3d, 'show?') === false) {
+                    $url_3d = str_replace('.com/', '.com/show/?m=', $url_3d);
+                }
+            ?>
+            <div class="cursor-pointer group" onclick="open3D('<?php echo $url_3d; ?>')">
+                <div class="relative aspect-video overflow-hidden rounded-sm mb-4 shadow-md bg-zinc-100">
+                    <?php $img = !empty($visite['photo_principale_1']) ? $visite['photo_principale_1'] : $visite['photo_principale']; ?>
+                    <img src="uploads/<?php echo $img; ?>" 
+                         class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition flex items-center justify-center">
-                        <span class="bg-white/90 text-zinc-900 px-4 py-2 text-[10px] font-bold tracking-widest uppercase">Lancer la visite</span>
+                        <span class="bg-white/90 text-zinc-900 px-4 py-2 text-[10px] font-bold tracking-widest uppercase shadow-xl transform group-hover:scale-110 transition-transform">Lancer la visite</span>
                     </div>
                 </div>
-                <h3 class="font-luxury text-xl">Villa Royale - 5 Pièces</h3>
-                <p class="text-zinc-400 text-xs mt-1 italic">Cocody Ambassade</p>
+                <h3 class="font-luxury text-xl text-zinc-800"><?php echo $visite['nom_modele']; ?></h3>
+                <p class="text-zinc-400 text-xs mt-1 italic"><?php echo $visite['slogan'] ?? 'Architecture Signature'; ?></p>
             </div>
-
-            <div class="cursor-pointer group" onclick="open3D('https://my.matterport.com/show?play=1&lang=en-US&m=vNtptZXMm8U')">
-                <div class="relative aspect-video overflow-hidden rounded-sm mb-4">
-                    <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition flex items-center justify-center">
-                        <span class="bg-white/90 text-zinc-900 px-4 py-2 text-[10px] font-bold tracking-widest uppercase">Lancer la visite</span>
-                    </div>
-                </div>
-                <h3 class="font-luxury text-xl">Duplex Horizon</h3>
-                <p class="text-zinc-400 text-xs mt-1 italic">Bingerville</p>
-            </div>
-
-            <div class="cursor-pointer group" onclick="open3D('https://my.matterport.com/show?play=1&lang=en-US&m=vNtptZXMm8U')">
-                <div class="relative aspect-video overflow-hidden rounded-sm mb-4">
-                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition flex items-center justify-center">
-                        <span class="bg-white/90 text-zinc-900 px-4 py-2 text-[10px] font-bold tracking-widest uppercase">Lancer la visite</span>
-                    </div>
-                </div>
-                <h3 class="font-luxury text-xl">Villa Contemporaine</h3>
-                <p class="text-zinc-400 text-xs mt-1 italic">Assinie-Mafia</p>
-            </div>
+            <?php endforeach; ?>
 
         </div>
 
         <div id="viewer-3d" class="hidden mt-16 animate-fade-in">
             <div class="relative w-full aspect-video md:aspect-[21/9] bg-black rounded-sm overflow-hidden shadow-2xl border-4 border-white">
-                <button onclick="close3D()" class="absolute top-4 right-4 z-20 bg-white text-black px-4 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-gold hover:text-white transition">Fermer la vue X</button>
+                <button onclick="close3D()" class="absolute top-4 right-4 z-20 bg-white text-black px-4 py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-gold hover:text-white transition shadow-lg">Fermer la vue X</button>
                 <iframe id="matterport-iframe" src="" frameborder="0" allowfullscreen allow="xr-spatial-tracking" class="w-full h-full"></iframe>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    function open3D(link) {
+        const viewer = document.getElementById('viewer-3d');
+        const iframe = document.getElementById('matterport-iframe');
+        
+        iframe.src = link;
+        viewer.classList.remove('hidden');
+        
+        // Scroll fluide vers le lecteur
+        setTimeout(() => {
+            viewer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150);
+    }
+
+    function close3D() {
+        const viewer = document.getElementById('viewer-3d');
+        const iframe = document.getElementById('matterport-iframe');
+        
+        viewer.classList.add('hidden');
+        iframe.src = ""; // Stop le flux en fermant
+    }
+</script>
 
 <script>
     function open3D(link) {
@@ -469,7 +488,7 @@
                 <ul class="text-zinc-400 text-sm space-y-4">
                     <li>Abidjan, Côte d'Ivoire</li>
                     <li><a href="tel:+2250708970664" class="hover:text-white transition">+225 07 08 970 664</a></li>
-                    <li>contact@terredivoire.ci</li>
+                    <li>contact@terre-divoire.com</li>
                 </ul>
             </div>
 

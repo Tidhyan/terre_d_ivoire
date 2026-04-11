@@ -91,17 +91,17 @@ $realisations = $stmt->fetchAll();
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div class="text-center p-8 rounded-2xl bg-gray-50 transition-transform hover:scale-105">
                     <div class="text-5xl mb-4">🎖️</div>
-                    <div class="text-4xl font-bold text-[#D4AF37] mb-2">15+</div>
+                    <div class="text-4xl font-bold text-[#F15A29] mb-2">15+</div>
                     <p class="text-gray-600 font-semibold uppercase tracking-wider text-sm">Années d'Expertise</p>
                 </div>
                 <div class="text-center p-8 rounded-2xl bg-gray-50 transition-transform hover:scale-105">
                     <div class="text-5xl mb-4">🏘️</div>
-                    <div class="text-4xl font-bold text-[#D4AF37] mb-2">100+</div>
+                    <div class="text-4xl font-bold text-[#F15A29] mb-2">100+</div>
                     <p class="text-gray-600 font-semibold uppercase tracking-wider text-sm">Projets Livrés</p>
                 </div>
                 <div class="text-center p-8 rounded-2xl bg-gray-50 transition-transform hover:scale-105">
                     <div class="text-5xl mb-4">🤝</div>
-                    <div class="text-4xl font-bold text-[#D4AF37] mb-2">100%</div>
+                    <div class="text-4xl font-bold text-[#F15A29] mb-2">100%</div>
                     <p class="text-gray-600 font-semibold uppercase tracking-wider text-sm">Satisfaction Clients</p>
                 </div>
             </div>
@@ -173,7 +173,7 @@ $realisations = $stmt->fetchAll();
     <section class="py-24 max-w-7xl mx-auto px-6">
     <div class="text-center mb-16">
         <h2 class="text-4xl font-bold mb-4 italic">Nos Réalisations 💎</h2>
-        <div class="h-1 w-20 bg-[#D4AF37] mx-auto mb-8"></div>
+        <div class="h-1 w-20 bg-[#F15A29] mx-auto mb-8"></div>
         
         <div class="flex flex-wrap justify-center gap-4 mt-8">
             <button class="filter-btn active" data-filter="all">🌟 Tout voir</button>
@@ -210,7 +210,7 @@ $realisations = $stmt->fetchAll();
                     <div class="py-6">
                         <div class="flex justify-between items-start">
                             <h3 class="text-xl font-bold"><?php echo htmlspecialchars($res['nom']); ?></h3>
-                            <span class="text-[#D4AF37] text-xs font-bold"><?php echo $category; ?></span>
+                            <span class="text-[#F15A29] text-xs font-bold"><?php echo $category; ?></span>
                         </div>
                         <p class="text-gray-500 text-sm mt-2"><?php echo htmlspecialchars($res['localisation']); ?></p>
                     </div>
@@ -232,17 +232,17 @@ $realisations = $stmt->fetchAll();
             
             <div class="space-y-2">
                 <label class="font-bold text-sm">Prénom & Nom 👤</label>
-                <input type="text" name="nom" required placeholder="Ex: Marc Yao" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#D4AF37] outline-none">
+                <input type="text" name="nom" required placeholder="Ex: Marc Yao" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#F15A29] outline-none">
             </div>
 
             <div class="space-y-2">
                 <label class="font-bold text-sm">Email professionnel 📧</label>
-                <input type="email" name="email" required placeholder="votre@mail.com" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#D4AF37] outline-none">
+                <input type="email" name="email" required placeholder="votre@mail.com" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#F15A29] outline-none">
             </div>
 
             <div class="space-y-2 md:col-span-2">
                 <label class="font-bold text-sm">Objet de votre demande 🎯</label>
-                <select name="objet" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#D4AF37] outline-none cursor-pointer">
+                <select name="objet" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#F15A29] outline-none cursor-pointer">
                     <option value="Suivi ACD">🏗️ Suivi de l’ACD</option>
                     <option value="Étude de projet">📐 Étude de projet</option>
                     <option value="Achat">🏠 Achat de bien</option>
@@ -254,7 +254,7 @@ $realisations = $stmt->fetchAll();
                 <textarea name="message" required rows="4" placeholder="Dites-nous tout..." class="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl focus:border-[#F15A29] outline-none"></textarea>
             </div>
 
-            <button type="submit" class="md:col-span-2 bg-[#D4AF37] text-white py-5 rounded-xl font-bold hover:bg-black transition-all">
+            <button type="submit" class="md:col-span-2 bg-[#F15A29] text-white py-5 rounded-xl font-bold hover:bg-black transition-all">
                 Envoyer ma demande 🚀
             </button>
         </form>
@@ -313,7 +313,7 @@ $realisations = $stmt->fetchAll();
                         title: 'Message envoyé !',
                         text: 'Merci pour votre confiance. Notre équipe vous recontactera sous 24h.',
                         icon: 'success',
-                        confirmButtonColor: '#D4AF37',
+                        confirmButtonColor: '#F15A29',
                         confirmButtonText: 'D’accord',
                         background: '#ffffff'
                     }).then(() => {
