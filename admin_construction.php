@@ -13,7 +13,7 @@ if(isset($_GET['delete'])) {
     $id = $_GET['delete'];
     // On pourrait ici ajouter la suppression des fichiers physiques dans /uploads
     $pdo->prepare("DELETE FROM modeles_construction WHERE id = ?")->execute([$id]);
-    header("Location: admin_construction.php");
+    header("Location: admin_construction.php?status=deleted");
 }
 
 // Récupération des données pour modification
@@ -40,7 +40,35 @@ $projets = $pdo->query("SELECT * FROM modeles_construction ORDER BY id DESC")->f
 </head>
 <body class="bg-gray-100 p-4 md:p-8">
     <div class="max-w-5xl mx-auto space-y-10">
-        
+        <?php if(isset($_GET['status'])): ?>
+            <div id="alert-msg" class="bg-emerald-100 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-xl flex items-center justify-between shadow-sm transition-all duration-500">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">
+                        <?php echo ($_GET['status'] == 'success') ? '✨' : '✅'; ?>
+                    </span>
+                    <div>
+                        <span class="font-bold">
+                            <?php echo ($_GET['status'] == 'success') ? 'Projet publié !' : 'Mise à jour réussie !'; ?>
+                        </span> 
+                        <p class="text-sm opacity-90">
+                            <?php echo ($_GET['status'] == 'success') ? 'Le nouveau modèle de construction est maintenant en ligne.' : 'Les modifications ont été enregistrées.'; ?>
+                        </p>
+                    </div>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700 p-2">✕</button>
+            </div>
+
+            <script>
+                setTimeout(() => {
+                    const alert = document.getElementById('alert-msg');
+                    if (alert) {
+                        alert.style.opacity = "0";
+                        alert.style.transform = "translateY(-10px)";
+                        setTimeout(() => alert.remove(), 600);
+                    }
+                }, 4000);
+            </script>
+        <?php endif; ?>
         <div class="bg-white p-8 shadow-md rounded">
             <h1 class="text-2xl font-bold mb-6 border-b pb-4">
                 <a href="admin_dashboard.php" class="inline-flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-xl font-bold hover:bg-[#D4AF37] transition-all duration-300 shadow-lg text-sm">

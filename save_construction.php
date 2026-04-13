@@ -81,6 +81,13 @@ if ($id) {
     }
 }
 
-header("Location: admin_construction.php?success=1");
+if ($id) {
+    // Si c'est une modification
+    header("Location: admin_construction.php?status=updated");
+} else {
+    // Si c'est un nouvel ajout
+    header("Location: admin_construction.php?status=success");
+}
 exit();
+?>
 ?>

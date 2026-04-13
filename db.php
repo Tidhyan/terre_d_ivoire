@@ -1,23 +1,20 @@
 <?php
-// 1. L'hôte est souvent 'localhost', mais parfois c'est une adresse IP ou un nom spécifique fourni par l'hébergeur
-$host = 'localhost'; 
-
-// 2. Le nom de la base de données (ton nouveau nom)
+// Paramètres reçus de l'hébergeur
+$host = '127.0.0.1'; // L'hébergeur précise d'utiliser ça au lieu de localhost
 $dbname = 'terre2778259';
-
-// 3. L'utilisateur (Sur un vrai serveur, ce n'est JAMAIS 'root')
-// C'est souvent quelque chose comme 'u2778259_admin'
-$user = 'terre2778259'; 
-
-// 4. Le mot de passe (Celui que tu as créé lors de la création de la BDD sur ton hébergement)
-$pass = '1jw1rfugaw'; 
+$user = 'terre2778259';
+$pass = 'jm641urfs5';
 
 try {
+    // Connexion avec les nouveaux identifiants
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-    // Optionnel mais recommandé : Activer les erreurs en mode exception pour le développement
+    
+    // Activation des erreurs pour t'aider si une requête SQL plante
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 } catch (PDOException $e) {
-    // En production, on évite d'afficher l'erreur brute pour la sécurité
+    // En production, on affiche un message propre
+    // Mais si tu as encore une erreur, remplace temporairement par : die($e->getMessage());
     die("Une erreur de connexion est survenue. Veuillez réessayer plus tard.");
 }
 ?>

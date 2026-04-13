@@ -50,8 +50,26 @@ $terrains = $pdo->query("SELECT * FROM produits_vente WHERE categorie = 'terrain
     <link rel="apple-touch-icon" href="images/logo.png">
 </head>
 <body class="bg-gray-50 p-4 md:p-10">
-
     <div class="max-w-6xl mx-auto">
+
+    <?php if(isset($_GET['status'])): ?>
+        <div id="alert-msg" class="mb-6 bg-emerald-100 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-2xl flex items-center justify-between shadow-sm transition-all">
+            <div class="flex items-center gap-3">
+                <span class="text-xl">
+                    <?php echo ($_GET['status'] == 'success') ? '✨' : '✅'; ?>
+                </span>
+                <div>
+                    <span class="font-bold">
+                        <?php echo ($_GET['status'] == 'success') ? 'Publication réussie !' : 'Modification réussie !'; ?>
+                    </span> 
+                    <?php echo ($_GET['status'] == 'success') ? 'Le nouveau terrain est maintenant en ligne.' : 'Le terrain a été mis à jour.'; ?>
+                </div>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-emerald-500 hover:text-emerald-700 p-2">✕</button>
+        </div>
+    <?php endif; ?>
+
+
         <div class="flex justify-between items-center mb-10">
             <h1 class="text-3xl font-bold text-zinc-900">Gestion des <span class="text-orange-600">Terrains</span></h1>
             <a href="index.php" class="text-sm font-bold border-b-2 border-black">Voir le site</a>
@@ -66,7 +84,7 @@ $terrains = $pdo->query("SELECT * FROM produits_vente WHERE categorie = 'terrain
                         <?php echo $t_mod ? '📝 Modifier le terrain' : '✨ Nouveau Terrain'; ?>
                     </h2>
 
-                    <form action="<?php echo $t_mod ? 'update_vente.php' : 'save_vente.php'; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    <form action="<?php echo $t_mod ? 'update_terrain.php' : 'save_terrain.php'; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                         
                         <?php if($t_mod): ?>
                             <input type="hidden" name="id" value="<?php echo $t_mod['id']; ?>">
@@ -83,6 +101,7 @@ $terrains = $pdo->query("SELECT * FROM produits_vente WHERE categorie = 'terrain
                             <div>
                                 <label class="block text-[10px] font-bold uppercase text-zinc-400 mb-1">Prix (FCFA)</label>
                                 <input type="number" name="prix" value="<?php echo $t_mod ? $t_mod['prix'] : ''; ?>" class="w-full bg-zinc-50 border-none p-3 rounded-lg outline-none" placeholder="15000000">
+                                
                             </div>
                             <div>
                                 <label class="block text-[10px] font-bold uppercase text-zinc-400 mb-1">Surface (m²)</label>
@@ -92,17 +111,10 @@ $terrains = $pdo->query("SELECT * FROM produits_vente WHERE categorie = 'terrain
 
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-zinc-400 mb-1">Localisation</label>
-                            <input type="text" name="localisation" value="<?php echo $t_mod ? $t_mod['localisation'] : ''; ?>" class="w-full bg-zinc-50 border-none p-3 rounded-lg outline-none" placeholder="ex: Angré 7e Tranche">
+                            <input type="text" name="localisation" value="<?php echo $t_mod ? $t_mod['localisation'] : ''; ?>" class="w-full bg-zinc-50 border-none p-3 rounded-lg outline-none" placeholder="ex: Angré">
                         </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-zinc-400 mb-1">Statut</label>
-                            <select name="statut" class="w-full bg-zinc-50 border-none p-3 rounded-lg outline-none">
-                                <option value="Disponible" <?php echo ($t_mod && $t_mod['statut'] == 'Disponible') ? 'selected' : ''; ?>>Disponible</option>
-                                <option value="Sous Compromis" <?php echo ($t_mod && $t_mod['statut'] == 'Sous Compromis') ? 'selected' : ''; ?>>Sous Compromis</option>
-                                <option value="Vendu" <?php echo ($t_mod && $t_mod['statut'] == 'Vendu') ? 'selected' : ''; ?>>Vendu</option>
-                            </select>
-                        </div>
+                       
 
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-zinc-400 mb-1">Lien Vidéo (YouTube/Drive)</label>
@@ -175,6 +187,19 @@ $terrains = $pdo->query("SELECT * FROM produits_vente WHERE categorie = 'terrain
             </div>
         </div>
     </div>
+
+            <script>
+    // Si l'alerte existe, on la fait disparaître doucement
+    const alert = document.getElementById('alert-msg');
+    if (alert) {
+        setTimeout(() => {
+            alert.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            alert.style.opacity = "0";
+            alert.style.transform = "translateY(-10px)";
+            setTimeout(() => alert.remove(), 600);
+        }, 4000);
+    }
+</script>
 
 </body>
 </html>

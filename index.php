@@ -92,44 +92,30 @@ include('db.php');
     </script>
 
 
+    <?php
+// On récupère les slides triées par l'ordre choisi
+$query = $pdo->query("SELECT * FROM carrousel ORDER BY ordre ASC");
+$slides_db = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+
     <header class="relative h-[90vh] md:h-screen overflow-hidden bg-zinc-900">
     
     <div id="slider" class="relative h-full w-full">
-        <div class="slide active">
-            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2070" class="hero-img" alt="Villa Moderne">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <p class="hero-subtitle">L'IMMOBILIER DE PRESTIGE</p>
-                <h1 class="hero-title">Construire, vendre et <br> valoriser <span>autrement</span></h1>
-                <div class="hero-btns">
-                    <a href="#vente" class="btn-gold">VOIR LES BIENS</a>
+        <?php foreach ($slides_db as $index => $slide): ?>
+            <div class="slide <?php echo ($index === 0) ? 'active' : ''; ?>">
+                <img src="<?php echo htmlspecialchars($slide['image_url']); ?>" class="hero-img" alt="Terre d'Ivoire">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <p class="hero-subtitle"><?php echo htmlspecialchars($slide['sous_titre']); ?></p>
+                    <h1 class="hero-title"><?php echo $slide['titre']; // On peut laisser passer le <br> si stocké en BD ?></h1>
+                    <div class="hero-btns">
+                        <a href="<?php echo htmlspecialchars($slide['lien_bouton']); ?>" class="btn-gold">
+                            <?php echo htmlspecialchars($slide['texte_bouton']); ?>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2070" class="hero-img" alt="Intérieur Luxe">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <p class="hero-subtitle">EXPERTISE TECHNIQUE</p>
-                <h1 class="hero-title">Votre projet sur mesure <br> de A à <span>Z</span></h1>
-                <div class="hero-btns">
-                    <a href="#construction" class="btn-gold">NOS PLANS</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070" class="hero-img" alt="Piscine de nuit">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <p class="hero-subtitle">OPPORTUNITÉS UNIQUES</p>
-                <h1 class="hero-title">Des terrains titrés <br> aux zones <span>recherchées</span></h1>
-                <div class="hero-btns">
-                    <a href="https://wa.me/2250708970664" class="btn-gold">NOUS CONTACTER</a>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 
     <button onclick="prevSlide()" class="slider-btn prev" aria-label="Précédent">
@@ -140,32 +126,32 @@ include('db.php');
     </button>
 
     <div class="slider-dots">
-        <div class="dot active" onclick="goToSlide(0)"></div>
-        <div class="dot" onclick="goToSlide(1)"></div>
-        <div class="dot" onclick="goToSlide(2)"></div>
+        <?php foreach ($slides_db as $index => $slide): ?>
+            <div class="dot <?php echo ($index === 0) ? 'active' : ''; ?>" onclick="goToSlide(<?php echo $index; ?>)"></div>
+        <?php endforeach; ?>
     </div>
 </header>
+
+
 <script>
     let currentSlide = 0;
-    // On sélectionne les éléments une seule fois pour la performance
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    const totalSlides = slides.length;
+    // On récupère dynamiquement les éléments générés par le PHP
+    let slides = document.querySelectorAll('.slide');
+    let dots = document.querySelectorAll('.dot');
+    let totalSlides = slides.length;
     let autoPlayInterval;
 
     function showSlide(index) {
-        // Retirer les classes actives
+        if (totalSlides === 0) return; // Sécurité si la BD est vide
+
         slides[currentSlide].classList.remove('active');
         dots[currentSlide].classList.remove('active');
         
-        // Calcul du nouvel index (boucle infinie)
         currentSlide = (index + totalSlides) % totalSlides;
         
-        // Ajouter les classes actives au nouveau slide
         slides[currentSlide].classList.add('active');
         dots[currentSlide].classList.add('active');
         
-        // Reset l'auto-play pour éviter un changement brusque juste après un clic manuel
         startAutoPlay();
     }
 
@@ -175,10 +161,11 @@ include('db.php');
 
     function startAutoPlay() {
         clearInterval(autoPlayInterval);
-        autoPlayInterval = setInterval(nextSlide, 5000);
+        if (totalSlides > 1) { // On ne lance l'auto-play que s'il y a plus d'une slide
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
     }
 
-    // Lancement au démarrage
     startAutoPlay();
 </script>
 

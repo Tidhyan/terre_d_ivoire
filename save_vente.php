@@ -54,6 +54,6 @@ if (!empty($_FILES['galerie']['name'][0])) {
     }
 }
 
-header("Location: admin_vente.php?success=1");
+header("Location: admin_vente.php?status=success");
 exit();
 ?>

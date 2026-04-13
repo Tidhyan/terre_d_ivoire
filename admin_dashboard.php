@@ -33,7 +33,15 @@ if(!isset($_SESSION['admin_logged'])){
     <main class="max-w-6xl mx-auto py-16 px-6">
         <h2 class="text-3xl font-bold mb-10 text-center">Que souhaitez-vous gérer ? 🛠️</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <a href="admin_carrousel.php" class="group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-[#D4AF37] transition-all hover:-translate-y-2">
+                <div class="text-4xl mb-4">🔂</div>
+                <h3 class="text-xl font-bold mb-2">SLIDE</h3>
+                <p class="text-gray-500 text-sm">Gérer les slides dans votre Acceuil.</p>
+                <div class="mt-6 text-[#D4AF37] font-bold group-hover:translate-x-2 transition-transform">Accéder →</div>
+            </a>    
+
             
             <a href="admin_construction.php" class="group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:border-[#D4AF37] transition-all hover:-translate-y-2">
                 <div class="text-4xl mb-4">🏗️</div>

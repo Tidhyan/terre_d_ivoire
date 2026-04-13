@@ -1,11 +1,46 @@
 <?php 
 include('db.php');
 
-// On récupère uniquement les produits de la catégorie 'terrain'
-$stmt = $pdo->prepare("SELECT * FROM produits_vente WHERE categorie = 'terrain' ORDER BY id DESC");
-$stmt->execute();
-$terrains = $stmt->fetchAll();
+// 1. Récupérer toutes les localités uniques pour le menu déroulant
+$stmtLoc = $pdo->query("SELECT DISTINCT localisation FROM produits_vente WHERE categorie = 'terrain'");
+$localites = $stmtLoc->fetchAll(PDO::FETCH_COLUMN);
+
+// 2. Initialiser la requête de base
+$sql = "SELECT * FROM produits_vente WHERE categorie = 'terrain'";
+$params = [];
+
+// 3. Filtrer par localité
+if (!empty($_GET['loc'])) {
+    $sql .= " AND localisation = ?";
+    $params[] = $_GET['loc'];
+}
+
+// 4. Filtrer par budget (Gestion des tranches)
+if (!empty($_GET['budget']) && strpos($_GET['budget'], '-') !== false) {
+    $tranche = explode('-', $_GET['budget']);
+    $min = (int)trim($tranche[0]);
+    $max = (int)trim($tranche[1]);
+    
+    // On force SQL à traiter la colonne 'prix' comme un nombre (CAST)
+    $sql .= " AND CAST(prix AS UNSIGNED) BETWEEN ? AND ?";
+    $params[] = $min;
+    $params[] = $max;
+}
+
+// --- AJOUT CRUCIAL : L'exécution de la requête ---
+$sql .= " ORDER BY id DESC";
+
+$terrains = []; // Initialisation pour éviter l'erreur "Undefined variable"
+try {
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    $terrains = $stmt->fetchAll();
+} catch (Exception $e) {
+    // Optionnel : error_log($e->getMessage());
+    $terrains = []; 
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,9 +58,9 @@ $terrains = $stmt->fetchAll();
     <nav class="nav-glass fixed w-full z-50 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <a href="index.php" class="flex items-center">
-    <img src="images/logo.png" alt="Terre d'Ivoire Logo" 
-         style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));">
-</a>
+                <img src="images/logo.png" alt="Terre d'Ivoire Logo" 
+                     style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));">
+            </a>
             
             <div class="hidden md:flex items-center space-x-10 menu-links">
                 <a href="index.php">ACCUEIL</a>
@@ -95,6 +130,49 @@ $terrains = $stmt->fetchAll();
         <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
     </header>
 
+    <div class="max-w-5xl mx-auto px-6 -mt-10 relative z-20">
+        <form action="terrains.php" method="GET" class="bg-white shadow-2xl rounded-2xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 border border-zinc-100">
+            
+            <div class="flex-1 w-full group">
+                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1 ml-1">Localisation</label>
+                <select name="loc" class="w-full bg-zinc-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-gold outline-none transition-all">
+                    <option value="">Toutes les zones</option>
+                    <?php foreach($localites as $loc): ?>
+                        <option value="<?php echo htmlspecialchars($loc); ?>" <?php echo (isset($_GET['loc']) && $_GET['loc'] == $loc) ? 'selected' : ''; ?>>
+                            📍 <?php echo htmlspecialchars($loc); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="flex-1 w-full">
+                <label class="block text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1 ml-1">Budget (FCFA)</label>
+                <select name="budget" class="w-full bg-zinc-50 border-none rounded-xl p-3 text-sm focus:ring-2 focus:ring-gold outline-none transition-all">
+                    <option value="">Peu importe</option>
+                    <option value="0-10000000" <?php echo (isset($_GET['budget']) && $_GET['budget'] == '0-10000000') ? 'selected' : ''; ?>>Entre 0 et 10 Millions</option>
+                    <option value="10000000-30000000" <?php echo (isset($_GET['budget']) && $_GET['budget'] == '10000000-30000000') ? 'selected' : ''; ?>>Entre 10 et 30 Millions</option>
+                    <option value="30000000-50000000" <?php echo (isset($_GET['budget']) && $_GET['budget'] == '30000000-50000000') ? 'selected' : ''; ?>>Entre 30 et 50 Millions</option>
+                    <option value="50000000-100000000" <?php echo (isset($_GET['budget']) && $_GET['budget'] == '50000000-100000000') ? 'selected' : ''; ?>>Entre 50 et 100 Millions</option>
+                    <option value="100000000-999999999" <?php echo (isset($_GET['budget']) && $_GET['budget'] == '100000000-999999999') ? 'selected' : ''; ?>>Au-dessus de 100 Millions</option>
+                </select>
+            </div>
+
+            <div class="w-full md:w-auto self-end">
+                <button type="submit" class="w-full bg-white text-black px-10 py-3.5 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-[#F15A29] hover:text-white transition-all shadow-lg">
+                    Trouver ma parcelle
+                </button>
+            </div>
+
+            <?php if(!empty($_GET)): ?>
+                <a href="terrains.php" class="text-zinc-400 hover:text-red-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            <?php endif; ?>
+        </form>
+    </div>
+
     <main class="max-w-7xl mx-auto px-6 py-24">
         <div class="grid grid-cols-1 gap-32">
 
@@ -114,7 +192,6 @@ $terrains = $stmt->fetchAll();
                     <div class="lg:col-span-5 <?php echo ($index % 2 != 0) ? 'order-2 lg:order-1' : ''; ?> space-y-6">
                         <div class="flex justify-between items-start">
                             <h2 class="font-luxury text-4xl italic"><?php echo htmlspecialchars($t['nom']); ?></h2>
-                            
                         </div>
                         
                         <p class="text-zinc-500 text-sm leading-relaxed">
@@ -159,7 +236,7 @@ $terrains = $stmt->fetchAll();
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="text-center py-20 border-2 border-dashed border-zinc-100">
-                    <p class="text-zinc-400 italic font-luxury text-2xl">Nos prochaines opportunités foncières arrivent bientôt...</p>
+                    <p class="text-zinc-400 italic font-luxury text-2xl">Aucun terrain ne correspond à votre budget dans cette zone pour le moment.</p>
                 </div>
             <?php endif; ?>
 
@@ -180,7 +257,6 @@ $terrains = $stmt->fetchAll();
     </a>
 
     <script>
-        // Menu mobile
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
         if(btn) {

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
             }
         }
 
-        header("Location: admin_vente.php?msg=Mise à jour réussie");
+        header("Location: admin_vente.php?status=updated");
         exit();
 
     } catch (PDOException $e) {
