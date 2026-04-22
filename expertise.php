@@ -16,8 +16,8 @@ $realisations = $stmt->fetchAll();
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="couleur.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-white">
@@ -91,7 +91,7 @@ $realisations = $stmt->fetchAll();
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div class="text-center p-8 rounded-2xl bg-gray-50 transition-transform hover:scale-105">
                     <div class="text-5xl mb-4">🎖️</div>
-                    <div class="text-4xl font-bold text-[#F15A29] mb-2">15+</div>
+                    <div class="text-4xl font-bold text-[#F15A29] mb-2">9+</div>
                     <p class="text-gray-600 font-semibold uppercase tracking-wider text-sm">Années d'Expertise</p>
                 </div>
                 <div class="text-center p-8 rounded-2xl bg-gray-50 transition-transform hover:scale-105">

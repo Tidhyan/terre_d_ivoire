@@ -28,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Connexion Admin | Terre d'Ivoire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body class="bg-zinc-900 h-screen flex items-center justify-center">
     <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md">

@@ -50,8 +50,8 @@ try {
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="couleur.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body class="bg-white">
 
@@ -199,13 +199,16 @@ try {
                         </p>
 
                         <?php if(!empty($t['lien_video'])): ?>
-                        <div class="pt-2">
-                            <a href="<?php echo $t['lien_video']; ?>" target="_blank" class="inline-flex items-center gap-3 text-gold text-[10px] font-bold uppercase tracking-widest group hover:translate-x-2 transition-transform">
-                                <span class="w-8 h-8 flex items-center justify-center border border-gold rounded-full group-hover:bg-gold group-hover:text-white transition-colors">▶</span>
-                                Voir la vidéo du terrain
-                            </a>
-                        </div>
-                        <?php endif; ?>
+<div class="mt-4 flex justify-start">
+    <a href="<?php echo $t['lien_video']; ?>" target="_blank" class="inline-flex items-center gap-4 bg-[#ff6600] hover:bg-[#e65c00] text-white px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-orange-500/20 transition-all transform hover:-translate-y-1">
+        <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+        </span>
+        Voir la vidéo du terrain
+    </a>
+</div>
+<?php endif; ?>
 
                         <div class="grid grid-cols-2 gap-4 border-y border-zinc-100 py-6">
                             <div>

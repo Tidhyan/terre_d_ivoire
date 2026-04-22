@@ -16,6 +16,11 @@ if(!$item) { echo "Bien non trouvé"; exit(); }
 $gal = $pdo->prepare("SELECT * FROM photos_vente_galerie WHERE id_produit = ?");
 $gal->execute([$id]);
 $images = $gal->fetchAll();
+
+// On prépare le tableau de toutes les images pour le slider (principale + galerie)
+$all_images = [];
+if(!empty($item['photo_principale'])) { $all_images[] = $item['photo_principale']; }
+foreach($images as $img) { $all_images[] = $img['chemin_image']; }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,8 +31,8 @@ $images = $gal->fetchAll();
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="couleur.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body class="bg-white">
 
@@ -72,7 +77,7 @@ $images = $gal->fetchAll();
             <a href="catalogue.php" class="font-semibold text-gold">VENTE (TOUT VOIR)</a>
             <div class="flex flex-col items-center space-y-4 bg-zinc-50 w-full py-4 border-y border-zinc-100">
                 <a href="promotion.php" class="text-sm">🏗️ Promotion immobilière</a>
-                <a href="particulier.php" class="text-sm text-gold">🏠 Propriété particulière</a>
+                <a href="particulier.php" class="text-sm">🏠 Propriété particulière</a>
                 <a href="terrains.php" class="text-sm">🌱 Terrain et parcelle</a>
             </div>
             <a href="construction.php" class="font-semibold">CONSTRUCTION</a>
@@ -85,16 +90,16 @@ $images = $gal->fetchAll();
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <span class="text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-4 block">Patrimoine Privé</span>
-                    <h1 class="font-luxury text-5xl md:text-7xl"><?php echo htmlspecialchars($item['nom']); ?></h1>
+                    <span class="text-gold font-bold text-[10px] uppercase tracking-[0.5em] mb-4 block">Programme d'Exception</span>
+                    <h1 class="font-luxury text-5xl md:text-7xl">Villa <span><?php echo htmlspecialchars($item['nom']); ?></span></h1>
                     <p class="text-zinc-400 mt-2 uppercase tracking-widest text-xs font-bold">📍 <?php echo htmlspecialchars($item['localisation']); ?></p>
                 </div>
                 <div class="text-left md:text-right">
-                    <p class="text-zinc-400 text-[10px] uppercase font-bold">Prix demandé</p>
+                    <p class="text-zinc-400 text-[10px] uppercase font-bold">Prix de vente final</p>
                     <p class="text-4xl font-luxury text-dark">
                         <?php 
                             $prix_nettoye = preg_replace('/[^0-9]/', '', $item['prix']); 
-                            echo !empty($prix_nettoye) ? number_format((float)$prix_nettoye, 0, ',', ' ') : 'Sur demande'; 
+                            echo number_format((float)$prix_nettoye, 0, ',', ' '); 
                         ?> 
                         <span class="text-sm not-italic">FCFA</span>
                     </p>
@@ -103,52 +108,50 @@ $images = $gal->fetchAll();
         </div>
     </header>
 
-    <section class="max-w-7xl mx-auto px-6 py-10">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-            <div class="md:col-span-8 h-[400px] md:h-[600px] overflow-hidden rounded-sm group relative">
-                <img src="uploads/<?php echo $item['photo_principale']; ?>" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                <div class="absolute bottom-6 left-6 bg-black/50 text-white text-[10px] px-4 py-2 backdrop-blur-md uppercase tracking-widest">Vue Principale</div>
+    <section class="max-w-7xl mx-auto px-6 py-4">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-[400px] md:h-[550px]">
+            <div class="md:col-span-8 h-full overflow-hidden rounded-sm relative group">
+                <img src="uploads/<?php echo $item['photo_principale']; ?>" class="w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                <div class="absolute bottom-6 left-6 bg-black/40 text-white text-[9px] px-3 py-1.5 backdrop-blur-md uppercase tracking-widest">Vue Principale</div>
             </div>
             
-            <div class="md:col-span-4 grid grid-cols-2 md:grid-cols-1 gap-4">
-                <?php 
-                $count = 0;
-                foreach($images as $img): 
-                    if($count < 2): 
-                ?>
-                    <div class="h-[190px] md:h-[292px] overflow-hidden rounded-sm">
-                        <img src="uploads/<?php echo $img['chemin_image']; ?>" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            <div class="md:col-span-4 h-full relative overflow-hidden rounded-sm group cursor-pointer" onclick="openGallery(1)">
+                <?php if(isset($all_images[1])): ?>
+                    <img src="uploads/<?php echo $all_images[1]; ?>" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 gallery-overlay flex flex-col items-center justify-center text-white">
+                        <span class="text-3xl font-light">+<?php echo count($all_images) - 1; ?></span>
+                        <span class="text-[10px] uppercase tracking-[0.2em] font-bold border-b border-gold/50 pb-1">Voir les photos</span>
                     </div>
-                <?php 
-                    endif;
-                    $count++;
-                endforeach; 
-                ?>
+                <?php endif; ?>
             </div>
         </div>
 
-        <?php if(count($images) > 2): ?>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            <?php for($i=2; $i < count($images); $i++): ?>
-                <div class="h-48 md:h-64 overflow-hidden rounded-sm">
-                    <img src="uploads/<?php echo $images[$i]['chemin_image']; ?>" class="w-full h-full object-cover hover:scale-110 transition duration-500">
-                </div>
-            <?php endfor; ?>
-        </div>
-        <?php endif; ?>
+        <?php if(!empty($item['video_youtube'])): ?>
+    <div class="mt-8 flex justify-center">
+        <a href="<?php echo htmlspecialchars($item['video_youtube']); ?>" 
+           target="_blank" 
+           class="inline-flex items-center gap-4 bg-[#ff6600] hover:bg-[#e65c00] text-white px-10 py-5 rounded-full font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-orange-500/20 transition-all transform hover:-translate-y-1">
+            
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+            </span>
+            
+            Voir la vidéo du bien
+        </a>
+    </div>
+<?php endif; ?>
     </section>
 
-    <main class="max-w-7xl mx-auto px-6 py-10">
+    <main class="max-w-7xl mx-auto px-6 py-20">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
             <div class="lg:col-span-2 space-y-16">
-                
                 <section>
                     <h3 class="font-luxury text-3xl mb-8 italic">
-                        <?php echo !empty($item['accroche']) ? htmlspecialchars($item['accroche']) : 'Demeure de <span>Caractère</span>'; ?>
+                        <?php echo !empty($item['accroche']) ? htmlspecialchars($item['accroche']) : 'Un écrin de <span>Modernité</span>'; ?>
                     </h3>
                     <div class="prose text-zinc-600 text-sm leading-relaxed max-w-3xl">
                         <p class="mb-10"><?php echo nl2br(htmlspecialchars($item['description'])); ?></p>
-                        
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-8 pt-8 border-t border-zinc-100">
                             <div>
                                 <p class="text-[10px] font-bold text-zinc-400 uppercase">Surface</p>
@@ -160,98 +163,100 @@ $images = $gal->fetchAll();
                             </div>
                             <div>
                                 <p class="text-[10px] font-bold text-zinc-400 uppercase">Parking</p>
-                                <p class="text-lg font-bold"><?php echo !empty($item['parking']) ? htmlspecialchars($item['parking']) : 'Disponible'; ?></p>
+                                <p class="text-lg font-bold"><?php echo !empty($item['parking']) ? htmlspecialchars($item['parking']) : 'Inclus'; ?></p>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section>
-                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-8 flex items-center gap-4">
-                        Options de livraison disponibles
-                        <span class="h-[1px] flex-1 bg-zinc-100"></span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
-                        <?php if(isset($item['livraison_gros_oeuvre']) && $item['livraison_gros_oeuvre'] == 1): ?>
-                        <div class="group p-8 border border-zinc-100 bg-white relative overflow-hidden transition-all duration-500 hover:border-zinc-400">
-                            <span class="absolute -right-2 -top-2 text-4xl opacity-5 font-luxury group-hover:opacity-10 transition-opacity">01</span>
-                            <div class="w-10 h-10 bg-zinc-100 text-zinc-900 flex items-center justify-center rounded-full mb-4 group-hover:bg-zinc-900 group-hover:text-white transition-colors">🏗️</div>
-                            <h4 class="font-luxury text-xl mb-2 italic">Gros <span>Œuvre</span></h4>
-                            <p class="text-zinc-500 text-[11px] leading-relaxed">Structure, toiture et maçonnerie extérieure terminées. Idéal pour personnaliser l'intérieur.</p>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if(isset($item['livraison_cle_main']) && $item['livraison_cle_main'] == 1): ?>
-                        <div class="group p-8 border border-zinc-900 bg-zinc-900 text-white relative overflow-hidden transition-all duration-500 hover:shadow-xl">
-                            <span class="absolute -right-2 -top-2 text-4xl opacity-10 font-luxury">02</span>
-                            <div class="w-10 h-10 bg-gold text-white flex items-center justify-center rounded-full mb-4 shadow-lg shadow-gold/20">✨</div>
-                            <h4 class="font-luxury text-xl mb-2 italic text-white">Clé en <span>main</span></h4>
-                            <p class="text-zinc-300 text-[11px] leading-relaxed">Prêt à habiter. Finitions de prestige, équipements haut de gamme et espaces aménagés.</p>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                </section>
-
                 <?php if(!empty($item['matterport']) || !empty($item['lien_video'])): ?>
-                <section class="bg-zinc-50 p-4 border border-zinc-100 rounded-sm">
-                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-4 italic">Immersion & Vidéo</h3>
-                    <div class="aspect-video w-full shadow-xl bg-white">
+                <section id="section-video" class="pt-10">
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-6 flex items-center gap-4 italic">
+                        Visite Immersive & Vidéo <span class="h-[1px] flex-1 bg-zinc-100"></span>
+                    </h3>
+                    <div class="aspect-video w-full shadow-2xl bg-black rounded-sm overflow-hidden border-4 border-white">
                         <?php 
                             $url = !empty($item['matterport']) ? $item['matterport'] : $item['lien_video'];
-                            if (strpos($url, 'matterport.com') !== false && strpos($url, 'show?') === false) {
-                                $url = str_replace('.com/', '.com/show/?m=', $url);
-                            }
                             $url = str_replace("watch?v=", "embed/", $url);
                         ?>
-                        <iframe src="<?php echo $url; ?>" class="w-full h-full" frameborder="0" allowfullscreen allow="xr-spatial-tracking"></iframe>
-                    </div>
-                </section>
-                <?php endif; ?>
-
-                <?php if(!empty($item['caracteristiques'])): ?>
-                <section>
-                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-8 flex items-center gap-4">
-                        Équipements & Atouts
-                        <span class="h-[1px] flex-1 bg-zinc-100"></span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <?php 
-                        $specs = explode(',', $item['caracteristiques']);
-                        foreach($specs as $s): 
-                        ?>
-                        <div class="flex items-center p-4 bg-zinc-50 rounded-sm text-sm">
-                            <span class="w-1.5 h-1.5 bg-gold rounded-full mr-3"></span>
-                            <?php echo trim($s); ?>
-                        </div>
-                        <?php endforeach; ?>
+                        <iframe src="<?php echo $url; ?>" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </section>
                 <?php endif; ?>
             </div>
 
             <div class="lg:col-span-1">
-                <div class="sticky top-32">
-                    <div class="bg-zinc-900 text-white p-8 rounded-sm shadow-2xl">
-                        <h3 class="font-luxury text-2xl mb-8">Demande d'<span>Informations</span></h3>
-                        <p class="text-zinc-400 text-xs mb-8 leading-relaxed">Cette propriété vous intéresse ? Nos conseillers sont à votre disposition pour organiser une visite privée.</p>
-                        <a href="https://wa.me/2250708970664?text=Bonjour,%20je%20souhaite%20plus%20d'informations%20sur%20la%20propriété%20<?php echo urlencode($item['nom']); ?>" class="block w-full text-center bg-gold text-white py-5 font-bold text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-dark transition duration-500">
-                            Contacter un Agent ✨
-                        </a>
-                    </div>
+                <div class="sticky top-32 bg-zinc-900 text-white p-8 rounded-sm shadow-2xl border-t-4 border-gold">
+                    <h3 class="font-luxury text-2xl mb-6">Demande d'<span>Informations</span></h3>
+                    <p class="text-zinc-400 text-xs mb-8 leading-relaxed">Nos conseillers sont à votre disposition pour organiser une visite privée de ce bien d'exception.</p>
+                    <a href="https://wa.me/2250708970664?text=Bonjour,%20je%20souhaite%20visiter%20: <?php echo urlencode($item['nom']); ?>" class="block w-full text-center bg-gold text-white py-5 font-bold text-[10px] tracking-[0.2em] uppercase hover:bg-white hover:text-zinc-900 transition-all duration-500">
+                        Prendre rendez-vous ✨
+                    </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-zinc-900 text-white py-10 text-center border-t border-white/5">
+    <footer class="bg-zinc-900 text-white py-10 text-center">
         <p class="text-[9px] tracking-[0.3em] uppercase opacity-40">© 2026 Terre Ivoire - Excellence Immobilière</p>
     </footer>
 
+    <div id="galleryModal" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center p-4">
+        <button onclick="closeGallery()" class="absolute top-6 right-6 text-white text-5xl hover:text-gold transition-colors z-[110]">&times;</button>
+        
+        <div class="relative w-full max-w-5xl">
+            <?php foreach($all_images as $index => $img_path): ?>
+                <div class="gallery-slide hidden animate-fadeIn">
+                    <img src="uploads/<?php echo $img_path; ?>" class="max-h-[85vh] mx-auto object-contain shadow-2xl">
+                    <p class="text-white/50 mt-6 text-[10px] tracking-[0.3em] uppercase text-center">Photo <?php echo $index + 1; ?> / <?php echo count($all_images); ?></p>
+                </div>
+            <?php endforeach; ?>
+
+            <button onclick="changeSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 p-4 text-white text-3xl hover:text-gold">❮</button>
+            <button onclick="changeSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 p-4 text-white text-3xl hover:text-gold">❯</button>
+        </div>
+    </div>
+
     <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.gallery-slide');
+
+        function openGallery(index) {
+            document.getElementById('galleryModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            showSlide(index);
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlideIndex + n);
+        }
+
+        function showSlide(n) {
+            if (n >= slides.length) currentSlideIndex = 0;
+            else if (n < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = n;
+
+            slides.forEach(s => s.classList.add('hidden'));
+            slides[currentSlideIndex].classList.remove('hidden');
+        }
+
+        // Fermer la modale si on clique à côté de l'image
+        document.getElementById('galleryModal').onclick = function(e) {
+            if(e.target === this) closeGallery();
+        }
+
+        // Menu mobile
         const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        if(menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+        }
     </script>
 
 </body>

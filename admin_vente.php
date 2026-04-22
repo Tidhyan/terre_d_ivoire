@@ -52,8 +52,8 @@ $projets = $pdo->query("SELECT * FROM produits_vente ORDER BY id DESC")->fetchAl
         }
     </style>
     
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body class="bg-gray-100 p-4 md:p-8">
     <div class="max-w-5xl mx-auto space-y-10">
@@ -131,16 +131,22 @@ $projets = $pdo->query("SELECT * FROM produits_vente ORDER BY id DESC")->fetchAl
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-lg border border-gray-100">
-                    <div>
-                        <label class="block font-bold text-xs uppercase text-gray-500 mb-2">Nombre de places Parking</label>
-                        <input type="number" name="parking" value="<?php echo $bien_a_modifier ? $bien_a_modifier['parking'] : ''; ?>" class="w-full border-2 border-white p-3 rounded-lg" placeholder="ex: 2">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-xs uppercase text-gray-500 mb-2">Lien Matterport (3D)</label>
-                       <input type="url" name="matterport" value="<?php echo (isset($bien_a_modifier['matterport'])) ? $bien_a_modifier['matterport'] : ''; ?>" class="w-full border-2 border-white p-3 rounded-lg" placeholder="https://my.matterport.com/show/?m=...">
-                    </div>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-6 rounded-lg border border-gray-100">
+    <div>
+        <label class="block font-bold text-xs uppercase text-gray-500 mb-2">Parking</label>
+        <input type="number" name="parking" value="<?php echo $bien_a_modifier ? $bien_a_modifier['parking'] : ''; ?>" class="w-full border-2 border-white p-3 rounded-lg focus:border-black outline-none" placeholder="ex: 2">
+    </div>
+    
+    <div>
+        <label class="block font-bold text-xs uppercase text-gray-500 mb-2 text-orange-600">Vidéo YouTube (Lien)</label>
+        <input type="url" name="video_youtube" value="<?php echo (isset($bien_a_modifier['video_youtube'])) ? $bien_a_modifier['video_youtube'] : ''; ?>" class="w-full border-2 border-white p-3 rounded-lg focus:border-orange-500 outline-none" placeholder="https://www.youtube.com/watch?v=...">
+    </div>
+
+    <div>
+        <label class="block font-bold text-xs uppercase text-gray-500 mb-2">Visite 3D (Matterport)</label>
+        <input type="url" name="lien_video" value="<?php echo (isset($bien_a_modifier['lien_video'])) ? $bien_a_modifier['lien_video'] : ''; ?>" class="w-full border-2 border-white p-3 rounded-lg focus:border-black outline-none" placeholder="Lien matterport existant">
+    </div>
+</div>
 
                 <div class="space-y-4">
                     <div>

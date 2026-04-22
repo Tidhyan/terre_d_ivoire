@@ -35,8 +35,8 @@ $projets = $pdo->query("SELECT * FROM modeles_construction ORDER BY id DESC")->f
     <title>Administration Construction | Terre d'Ivoire</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link rel="apple-touch-icon" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
 </head>
 <body class="bg-gray-100 p-4 md:p-8">
     <div class="max-w-5xl mx-auto space-y-10">

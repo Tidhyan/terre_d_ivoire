@@ -1,7 +1,7 @@
 <?php
 include('db.php');
 
-// Récupération des données simples
+// 1. Récupération des données du formulaire
 $cat = $_POST['categorie'];
 $nom = $_POST['nom'];
 $accroche = $_POST['accroche'];
@@ -11,45 +11,64 @@ $prix = $_POST['prix'];
 $sup = $_POST['superficie'];
 $pieces = $_POST['pieces']; 
 $parking = $_POST['parking'];
-$video = $_POST['lien_video']; // Utilisé pour Terrain (YouTube)
-$matterport = $_POST['matterport']; // Utilisé pour Villas (Lien 3D)
 
-// Gestion des options de livraison (Checkboxes : 1 si coché, 0 sinon)
+// On récupère les deux liens distincts
+$video_youtube = $_POST['video_youtube']; // Le nouveau champ YouTube
+$matterport = $_POST['lien_video'];    // Le champ Matterport (nommé lien_video dans le formulaire)
+
+// Gestion des options de livraison
 $livraison_gros = isset($_POST['livraison_gros_oeuvre']) ? 1 : 0;
 $livraison_cle = isset($_POST['livraison_cle_main']) ? 1 : 0;
 
-// Si c'est une villa, on utilise le lien Matterport comme lien_video principal
-$video_final = ($cat === 'terrain') ? $video : $matterport;
-
 $carac = $_POST['caracteristiques'] ?? '';
 
-// Gestion de la Photo principale
-$photo_p = time() . '_' . $_FILES['photo_principale']['name'];
-move_uploaded_file($_FILES['photo_principale']['tmp_name'], 'uploads/' . $photo_p);
+// 2. Gestion de la Photo principale
+$photo_p = "";
+if(isset($_FILES['photo_principale']) && $_FILES['photo_principale']['error'] == 0){
+    $photo_p = time() . '_' . $_FILES['photo_principale']['name'];
+    move_uploaded_file($_FILES['photo_principale']['tmp_name'], 'uploads/' . $photo_p);
+}
 
-// REQUÊTE SQL COMPLÈTE
+// 3. REQUÊTE SQL (Correction du nombre de ?)
+// Il y a 15 colonnes, il faut donc exactement 15 points d'interrogation
 $sql = "INSERT INTO produits_vente (
             categorie, nom, accroche, localisation, description, prix, 
-            superficie, pieces, parking, lien_video, caracteristiques, 
+            superficie, pieces, parking, video_youtube, lien_video, caracteristiques, 
             livraison_gros_oeuvre, livraison_cle_main, photo_principale
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $pdo->prepare($sql);
+
+// 4. EXÉCUTION (L'ordre doit être strictement le même que dans la liste au-dessus)
 $stmt->execute([
-    $cat, $nom, $accroche, $loc, $desc, $prix, 
-    $sup, $pieces, $parking, $video_final, $carac, 
-    $livraison_gros, $livraison_cle, $photo_p
+    $cat,             // 1
+    $nom,             // 2
+    $accroche,        // 3
+    $loc,             // 4
+    $desc,            // 5
+    $prix,            // 6
+    $sup,             // 7
+    $pieces,          // 8
+    $parking,         // 9
+    $video_youtube,   // 10 (Nouvelle colonne)
+    $matterport,      // 11 (Colonne lien_video)
+    $carac,           // 12
+    $livraison_gros,  // 13
+    $livraison_cle,   // 14
+    $photo_p          // 15
 ]);
 
 $id_produit = $pdo->lastInsertId();
 
-// Galerie Photos
+// 5. Gestion de la Galerie Photos
 if (!empty($_FILES['galerie']['name'][0])) {
     foreach ($_FILES['galerie']['tmp_name'] as $key => $tmp_name) {
-        $filename = time() . '_gal_' . $_FILES['galerie']['name'][$key];
-        if (move_uploaded_file($tmp_name, 'uploads/' . $filename)) {
-            $pdo->prepare("INSERT INTO photos_vente_galerie (id_produit, chemin_image) VALUES (?, ?)")
-                ->execute([$id_produit, $filename]);
+        if($_FILES['galerie']['error'][$key] == 0){
+            $filename = time() . '_gal_' . $_FILES['galerie']['name'][$key];
+            if (move_uploaded_file($tmp_name, 'uploads/' . $filename)) {
+                $pdo->prepare("INSERT INTO photos_vente_galerie (id_produit, chemin_image) VALUES (?, ?)")
+                    ->execute([$id_produit, $filename]);
+            }
         }
     }
 }
