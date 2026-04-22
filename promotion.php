@@ -121,9 +121,10 @@ $promotions = $stmt->fetchAll();
                         </div>
                     </div>
                     
-                    <a href="details_promo.php?id=<?php echo $promo['id']; ?>" class="block w-full text-center border border-dark py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition">
-                        Voir les détails →
-                    </a>
+                    <a href="details_promo.php?id=<?php echo $promo['id']; ?>" 
+   class="block w-full text-center border border-[#ff6600] text-[#ff6600] py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-[#ff6600] hover:text-white transition-all duration-300">
+    Voir les détails →
+</a>
                 </div>
             </div>
             <?php endforeach; ?>

@@ -132,9 +132,10 @@ $biens = $stmt->fetchAll();
                         </div>
                     </div>
                     
-                    <a href="details_particulier.php?id=<?php echo $b['id']; ?>" class="block w-full text-center border border-dark py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-900 hover:text-white transition">
-                        Découvrir la demeure →
-                    </a>
+                    <a href="details_particulier.php?id=<?php echo $b['id']; ?>" 
+   class="block w-full text-center border border-[#ff6600] text-[#ff6600] py-4 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-[#ff6600] hover:text-white transition-all duration-300">
+    Découvrir la demeure →
+</a>
                 </div>
             </div>
             <?php endforeach; ?>
